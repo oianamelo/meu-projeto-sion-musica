@@ -765,7 +765,7 @@ async function gerarPlanoParaTurma(turma, apiKey) {
         throw new Error(result.error);
       }
 
-      const planoGerado = result.data.content[0].text;
+      const planoGerado = data?.content?.[0]?.text || "Erro ao gerar plano";
       
       // Salvar como último plano
       planosAnteriores[turma.id] = {
