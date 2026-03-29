@@ -767,8 +767,17 @@ Escolher
 
 <br><br>
 
-<button
-onclick="gerarPlanoIA()">
+<button onclick="gerarPlanoIA()">
+Gerar plano novo
+</button>
+
+<button onclick="gerarContinuacaoPlano()" class="btn2">
+Gerar continuação
+</button>
+
+<button onclick="gerarAvaliacaoIA()" class="btn2">
+Sugerir avaliação trimestral
+</button>
 
 Gerar plano
 
@@ -1467,22 +1476,91 @@ Ver
 IA PEDAGÓGICA
 =============================== */
 
-async function gerarPlanoIA(){
+async function gerarContinuacaoPlano(){
 
-let id=
+let id =
+document.getElementById("selectTurmaPlano").value;
 
-document
-.getElementById("selectTurmaPlano")
-.value;
-
-let turma=
+let turma =
 db.turmas.find(t=>t.id==id);
 
 if(!turma){
-
 alert("Escolha turma");
-
 return;
+}
+
+let ultimoPlano =
+turma.planos.length ?
+turma.planos[turma.planos.length-1].conteudo :
+"";
+
+let prompt = `
+
+Você é especialista em educação musical.
+
+Continue a sequência pedagógica da aula anterior.
+
+AULA ANTERIOR:
+${ultimoPlano}
+
+Crie a próxima aula considerando progressão pedagógica.
+
+Evite repetir atividades.
+
+Inclua:
+
+objetivo
+aquecimento
+atividade principal
+criação musical
+encerramento
+avaliação observacional
+
+`;
+
+enviarParaClaude(prompt);
+
+}
+
+async function gerarAvaliacaoIA(){
+
+let id =
+document.getElementById("selectTurmaPlano").value;
+
+let turma =
+db.turmas.find(t=>t.id==id);
+
+if(!turma){
+alert("Escolha turma");
+return;
+}
+
+let registros =
+db.registros
+.filter(r=>r.turma===turma.nome)
+.map(r=>r.aluno + ": " + r.texto)
+.join("\n");
+
+let prompt = `
+
+Você é especialista em avaliação em educação musical infantil.
+
+Analise os registros pedagógicos abaixo e gere
+uma avaliação trimestral da turma.
+
+REGISTROS:
+${registros}
+
+Crie:
+
+pontos de desenvolvimento musical
+aspectos sociais observados
+dificuldades
+sugestões pedagógicas
+
+`;
+
+enviarParaClaude(prompt);
 
 }
 
