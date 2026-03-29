@@ -779,10 +779,6 @@ Gerar continuação
 Sugerir avaliação trimestral
 </button>
 
-Gerar plano
-
-</button>
-
 </div>
 
 <div id="areaPlano"></div>
@@ -1476,6 +1472,26 @@ Ver
 IA PEDAGÓGICA
 =============================== */
 
+async function gerarPlanoIA(){
+
+let id =
+document.getElementById("selectTurmaPlano").value;
+
+let turma =
+db.turmas.find(t=>t.id==id);
+
+if(!turma){
+alert("Escolha turma");
+return;
+}
+
+let prompt =
+montarPrompt(turma);
+
+enviarParaClaude(prompt,turma);
+
+}  
+
 async function gerarContinuacaoPlano(){
 
 let id =
@@ -1564,6 +1580,65 @@ enviarParaClaude(prompt);
 
 }
 
+async function enviarParaClaude(prompt,turma){
+
+document
+.getElementById("areaPlano")
+.innerHTML="Gerando...";
+
+try{
+
+let r =
+await fetch("/api/claude",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({prompt})
+
+});
+
+let data =
+await r.json();
+
+let texto =
+data?.text || "Erro IA";
+
+if(turma){
+
+let plano={
+
+id:Date.now(),
+
+data:new Date()
+.toLocaleDateString(),
+
+conteudo:texto
+
+};
+
+turma.planos.push(plano);
+
+db.planos.push(plano);
+
+save();
+
+}
+
+document
+.getElementById("areaPlano")
+.innerHTML=
+formatPlano(texto);
+
+}catch(e){
+
+alert("Erro IA");
+
+}
+  
 let prompt=
 montarPrompt(turma);
 
