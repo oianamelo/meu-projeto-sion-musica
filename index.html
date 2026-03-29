@@ -757,28 +757,6 @@ Turma:
 
 <select id="selectTurmaPlano">
 
-<option value="">
-Escolher
-</option>
-
-</select>
-
-<option value="${t.id}">
-${t.nome}
-</option>`;
-
-});  
-
-<option>
-
-Escolher
-
-</option>
-
-</select>
-
-<br><br>
-
 <button onclick="gerarPlanoIA()">
 Gerar plano novo
 </button>
@@ -1728,7 +1706,7 @@ db.planos.push(plano);
 save();
 
 document
-  .getElementById("areaPlano")
+.getElementById("areaPlano")
 .innerHTML=
 formatPlano(texto);
 
@@ -1739,7 +1717,6 @@ alert("Erro IA");
 }
 
 }
-
 /* ===============================
 PROMPT INTELIGENTE
 =============================== */
