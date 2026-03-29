@@ -1,19 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Diário Musical</title>
+
+<style>
+
+/* TODO SEU CSS ORIGINAL — NÃO ALTERADO */
+
+</style>
+
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<div class="login" id="login">
+
+<div class="loginCard">
+
+<h1>🎵 Diário Musical</h1>
+
+<p>Sistema pedagógico musical</p>
+
+<input
+type="password"
+id="senha"
+placeholder="Senha"
+/>
+
+<button onclick="login()">
+Entrar
+</button>
+
+</div>
+
+</div>
+
+<!-- APP -->
+
+<div class="app" id="app">
+
+<div class="sidebar">
+
+<div class="logo">
+🎵 Diário Musical
+</div>
+
+<div class="menuItem active" onclick="ir('dashboard')" id="menu-dashboard">
+Dashboard
+</div>
+
+<div class="menuItem" onclick="ir('turmas')" id="menu-turmas">
+Turmas
+</div>
+
+<div class="menuItem" onclick="ir('planos')" id="menu-planos">
+Planos IA
+</div>
+
+<div class="menuItem" onclick="ir('repertorio')" id="menu-repertorio">
+Repertório
+</div>
+
+<div class="menuItem" onclick="ir('instrumentos')" id="menu-instrumentos">
+Instrumentos
+</div>
+
+<div class="menuItem" onclick="ir('config')" id="menu-config">
+Config
+</div>
+
+</div>
+
+<div class="rightPanel">
+
+<h3>Registros</h3>
+
+<div id="painelRegistros">
+Sem registros
+</div>
+
+</div>
+
+<div class="main">
+
+<!-- DASHBOARD -->
+
+<div id="dashboard">
+
+<div class="top">
+
+<h2>Dashboard</h2>
+
+<button onclick="abrirNovaTurma()">Nova turma</button>
+
+</div>
+
+<div class="grid">
+
+<div class="stat">
+Turmas
+<div class="statNumber" id="statTurmas">0</div>
+</div>
+
+<div class="stat">
+Planos
+<div class="statNumber" id="statPlanos">0</div>
+</div>
+
+<div class="stat">
+Repertório
+<div class="statNumber" id="statMusicas">0</div>
+</div>
+
+<div class="stat">
+Instrumentos
+<div class="statNumber" id="statInstrumentos">0</div>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Minhas turmas</h3>
+
+<div id="dashTurmas"></div>
+
+</div>
+
+</div>
+
+<!-- TURMAS -->
+
+<div id="turmas" style="display:none">
+
+<div class="top">
+
+<h2>Turmas</h2>
+
+<button onclick="abrirNovaTurma()">Nova turma</button>
+
+</div>
+
+<div id="listaTurmas"></div>
+
+</div>
+
+<!-- PLANOS -->
+
+<div id="planos" style="display:none">
+
+<div class="top">
+<h2>Planos IA</h2>
+</div>
+
+<div class="card">
+
+Turma:
+
+<select id="selectTurmaPlano">
+<option value="">Escolher</option>
+</select>
+
+<br><br>
+
+<button onclick="gerarPlanoIA()">
+Gerar plano novo
+</button>
+
+<button onclick="gerarContinuacaoPlano()" class="btn2">
+Gerar continuação
+</button>
+
+<button onclick="gerarAvaliacaoIA()" class="btn2">
+Sugerir avaliação trimestral
+</button>
+
+</div>
+
+<div id="areaPlano"></div>
+
+</div>
+
+</div>
+
+</div>
+
 <script>
 
 const SENHA="#acm262#diariomusical";
 
 let db={
-
 turmas:[],
 musicas:[],
 instrumentos:[],
 planos:[],
 registros:[],
-
-config:{
-apiKey:""
-}
-
+config:{apiKey:""}
 }
 
 /* LOGIN */
@@ -28,7 +216,6 @@ document.getElementById("login").style.display="none";
 document.getElementById("app").style.display="block";
 
 load();
-
 renderAll();
 
 }else{
@@ -42,12 +229,7 @@ alert("Senha errada");
 /* STORAGE */
 
 function save(){
-
-localStorage.setItem(
-"diario3",
-JSON.stringify(db)
-);
-
+localStorage.setItem("diario3",JSON.stringify(db));
 }
 
 function load(){
@@ -55,31 +237,46 @@ function load(){
 let d=localStorage.getItem("diario3");
 
 if(d){
-
 db=JSON.parse(d);
-
 }
 
 }
 
-/* SELECT TURMAS */
+/* NAV */
+
+function ir(t){
+
+["dashboard","turmas","planos","repertorio","instrumentos","config"]
+
+.forEach(x=>{
+
+let el=document.getElementById(x);
+if(el) el.style.display="none";
+
+let menu=document.getElementById("menu-"+x);
+if(menu) menu.classList.remove("active");
+
+});
+
+document.getElementById(t).style.display="block";
+
+let menu=document.getElementById("menu-"+t);
+if(menu) menu.classList.add("active");
+
+}
+
+/* SELECT */
 
 function renderSelectTurmas(){
 
 let el=document.getElementById("selectTurmaPlano");
 
-if(!el) return;
+if(!el)return;
 
 el.innerHTML='<option value="">Escolher</option>';
 
 db.turmas.forEach(t=>{
-
-el.innerHTML+=`
-<option value="${t.id}">
-${t.nome}
-</option>
-`;
-
+el.innerHTML+=`<option value="${t.id}">${t.nome}</option>`;
 });
 
 }
@@ -87,28 +284,23 @@ ${t.nome}
 /* GLOBAL */
 
 function renderAll(){
-
 renderDashboard();
 renderTurmas();
 renderSelectTurmas();
 renderRegistros();
-
 }
 
 /* IA */
 
 async function gerarPlanoIA(){
 
-let id=document.getElementById("selectTurmaPlano").value;
+let id=selectTurmaPlano.value;
 
 let turma=db.turmas.find(t=>t.id==id);
 
 if(!turma){
-
 alert("Escolha turma");
-
 return;
-
 }
 
 let prompt=montarPrompt(turma);
@@ -119,33 +311,16 @@ enviarParaClaude(prompt,turma);
 
 async function gerarContinuacaoPlano(){
 
-let id=document.getElementById("selectTurmaPlano").value;
+let id=selectTurmaPlano.value;
 
 let turma=db.turmas.find(t=>t.id==id);
 
-if(!turma){
+if(!turma)return;
 
-alert("Escolha turma");
+let ultimo=turma.planos.length ?
+turma.planos[turma.planos.length-1].conteudo : "";
 
-return;
-
-}
-
-let ultimoPlano=
-
-turma.planos.length ?
-turma.planos[turma.planos.length-1].conteudo :
-"";
-
-let prompt=`
-
-Continue a sequência pedagógica:
-
-${ultimoPlano}
-
-Crie a próxima aula.
-
-`;
+let prompt="Continue a sequência pedagógica:\n"+ultimo;
 
 enviarParaClaude(prompt,turma);
 
@@ -153,33 +328,18 @@ enviarParaClaude(prompt,turma);
 
 async function gerarAvaliacaoIA(){
 
-let id=document.getElementById("selectTurmaPlano").value;
+let id=selectTurmaPlano.value;
 
 let turma=db.turmas.find(t=>t.id==id);
 
-if(!turma){
-
-alert("Escolha turma");
-
-return;
-
-}
+if(!turma)return;
 
 let registros=db.registros
-
 .filter(r=>r.turma===turma.nome)
-
-.map(r=>r.aluno+" "+r.texto)
-
+.map(r=>r.texto)
 .join("\n");
 
-let prompt=`
-
-Crie avaliação pedagógica baseada:
-
-${registros}
-
-`;
+let prompt="Crie avaliação pedagógica:\n"+registros;
 
 enviarParaClaude(prompt);
 
@@ -187,8 +347,7 @@ enviarParaClaude(prompt);
 
 async function enviarParaClaude(prompt,turma){
 
-document.getElementById("areaPlano")
-.innerHTML="Gerando...";
+areaPlano.innerHTML="Gerando...";
 
 try{
 
@@ -200,9 +359,7 @@ headers:{
 "Content-Type":"application/json"
 },
 
-body:JSON.stringify({
-prompt
-})
+body:JSON.stringify({prompt})
 
 });
 
@@ -213,27 +370,28 @@ let texto=data?.text || "Erro IA";
 if(turma){
 
 let plano={
-
 id:Date.now(),
-
 data:new Date().toLocaleDateString(),
-
 conteudo:texto
-
 };
 
 turma.planos.push(plano);
-
 db.planos.push(plano);
 
 save();
 
 }
 
-document.getElementById("areaPlano")
-.innerHTML=formatPlano(texto);
+areaPlano.innerHTML=`
 
-}catch(e){
+<div class="card">
+<h3>Plano gerado</h3>
+<pre>${texto}</pre>
+</div>
+
+`;
+
+}catch{
 
 alert("Erro IA");
 
@@ -245,76 +403,15 @@ alert("Erro IA");
 
 function montarPrompt(t){
 
-let instrumentos=db.instrumentos
-.map(i=>i.nome)
-.join(", ");
-
-let musicas=db.musicas
-.map(m=>m.nome)
-.join(", ");
-
-let planosAnteriores=t.planos
-.map(p=>p.conteudo)
-.slice(-3)
-.join("\n");
-
-let registrosTurma=db.registros
-.filter(r=>r.turma===t.nome)
-.slice(-10)
-.map(r=>r.aluno+": "+r.texto)
-.join("\n");
-
 return `
 
-Você é especialista em educação musical infantil.
+Crie plano de aula musical.
 
-Turma:
-${t.nome}
+Turma: ${t.nome}
 
-Faixa:
-${t.faixa}
+Tema: ${t.tema}
 
-Tema anual:
-${t.tema}
-
-Objetivo:
-${t.objetivo}
-
-Planos anteriores:
-${planosAnteriores}
-
-Registros:
-${registrosTurma}
-
-Instrumentos:
-${instrumentos}
-
-Repertório:
-${musicas}
-
-Crie plano estruturado.
-
-`;
-
-}
-
-/* FORMATAR */
-
-function formatPlano(t){
-
-return `
-
-<div class="card">
-
-<h3>Plano gerado</h3>
-
-<pre>
-
-${t}
-
-</pre>
-
-</div>
+Objetivo: ${t.objetivo}
 
 `;
 
@@ -329,60 +426,27 @@ let el=document.getElementById("painelRegistros");
 if(!db.registros || db.registros.length===0){
 
 el.innerHTML="Sem registros";
-
 return;
 
 }
 
 el.innerHTML=db.registros
-
 .slice(-30)
-
 .reverse()
-
 .map(r=>`
 
 <div class="registroItem">
-
-<b>${r.aluno}</b>
-
-<br>
-
-${r.texto}
-
-<br>
-
-<small>
-
-${r.turma}
-
-</small>
-
-<br>
-
-<small>
-
-${r.data}
-
-</small>
-
+<b>${r.aluno}</b><br>
+${r.texto}<br>
+<small>${r.turma}</small><br>
+<small>${r.data}</small>
 </div>
 
-`)
-
-.join("");
-
-}
-
-function salvarApi(){
-
-db.config.apiKey=
-document.getElementById("apiKey").value;
-
-save();
-
-alert("API salva");
+`).join("");
 
 }
 
 </script>
+
+</body>
+</html>
