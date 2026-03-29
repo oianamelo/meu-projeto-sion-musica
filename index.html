@@ -1175,6 +1175,404 @@ document
 
 }
 
+  /* ===============================
+TURMA DETALHE (PASTA PEDAGÓGICA)
+=============================== */
+
+let turmaAtual=null;
+
+function abrirTurma(id){
+
+turmaAtual=
+db.turmas.find(t=>t.id===id);
+
+if(!turmaAtual)return;
+
+ir("turmas");
+
+document
+.getElementById("listaTurmas")
+.innerHTML=
+
+renderTurmaDetalhe(turmaAtual);
+
+}
+
+function renderTurmaDetalhe(t){
+
+return `
+
+<div class="card">
+
+<h3>${t.nome}</h3>
+
+Faixa: ${t.faixa}
+
+<br>
+
+Tema anual:
+${t.tema||"-"}
+
+<br>
+
+Objetivo:
+${t.objetivo||"-"}
+
+<br><br>
+
+<button onclick="abrirNovoAluno()">
+
+Novo aluno
+
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>Alunos</h3>
+
+${renderAlunos(t)}
+
+</div>
+
+
+<div class="card">
+
+<h3>Planos</h3>
+
+${renderPlanosTurma(t)}
+
+</div>
+
+`;
+
+}
+
+/* ===============================
+ALUNOS
+=============================== */
+
+function abrirNovoAluno(){
+
+let nome=
+
+prompt("Nome aluno");
+
+if(!nome)return;
+
+let a={
+
+id:Date.now(),
+
+nome,
+
+perfil:"",
+
+dificuldades:"",
+
+registros:[]
+
+};
+
+turmaAtual.alunos.push(a);
+
+save();
+
+abrirTurma(turmaAtual.id);
+
+}
+
+function renderAlunos(t){
+
+if(t.alunos.length===0){
+
+return"Sem alunos";
+
+}
+
+return t.alunos.map(a=>`
+
+<div class="turma">
+
+${a.nome}
+
+<br>
+
+<button
+onclick="registrarAluno(${a.id})">
+
+Registrar
+
+</button>
+
+</div>
+
+`).join("");
+
+}
+
+function registrarAluno(id){
+
+let aluno=
+
+turmaAtual.alunos
+.find(a=>a.id===id);
+
+let obs=
+
+prompt("Observação");
+
+if(!obs)return;
+
+aluno.registros.push({
+
+data:new Date(),
+
+texto:obs
+
+});
+
+save();
+
+}
+
+/* ===============================
+PLANOS TURMA
+=============================== */
+
+function renderPlanosTurma(t){
+
+if(t.planos.length===0){
+
+return"Sem planos";
+
+}
+
+return t.planos.map(p=>`
+
+<div class="turma">
+
+${p.data}
+
+<br>
+
+<button
+onclick="verPlano(${p.id})">
+
+Ver
+
+</button>
+
+</div>
+
+`).join("");
+
+}
+
+/* ===============================
+IA PEDAGÓGICA
+=============================== */
+
+async function gerarPlanoIA(){
+
+let id=
+
+document
+.getElementById("selectTurmaPlano")
+.value;
+
+let turma=
+db.turmas.find(t=>t.id==id);
+
+if(!turma){
+
+alert("Escolha turma");
+
+return;
+
+}
+
+let prompt=
+montarPrompt(turma);
+
+document
+.getElementById("areaPlano")
+.innerHTML="Gerando...";
+
+try{
+
+let r=
+
+await fetch(
+
+"/api/claude",
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":
+"application/json"
+
+},
+
+body:
+
+JSON.stringify({
+
+prompt
+
+})
+
+}
+
+);
+
+let data=
+await r.json();
+
+let texto=
+data.text;
+
+let plano={
+
+id:Date.now(),
+
+data:new Date()
+.toLocaleDateString(),
+
+conteudo:texto
+
+};
+
+turma.planos.push(plano);
+
+db.planos.push(plano);
+
+save();
+
+document
+.getElementById("areaPlano")
+.innerHTML=
+
+formatPlano(texto);
+
+}catch(e){
+
+alert("Erro IA");
+
+}
+
+}
+
+/* ===============================
+PROMPT INTELIGENTE
+=============================== */
+
+function montarPrompt(t){
+
+let instrumentos=
+
+db.instrumentos
+.map(i=>i.nome)
+.join(",");
+
+let musicas=
+
+db.musicas
+.map(m=>m.nome)
+.join(",");
+
+let planosAnteriores=
+
+t.planos
+.map(p=>p.conteudo)
+.slice(-2)
+.join("\n");
+
+return `
+
+Você é especialista em educação musical.
+
+Siga:
+
+BNCC
+ABEM
+ISME
+DGE
+
+CONTEXTO:
+
+Turma:
+${t.nome}
+
+Faixa:
+${t.faixa}
+
+Tema anual:
+${t.tema}
+
+Objetivo:
+${t.objetivo}
+
+Dificuldades:
+${t.dificuldade}
+
+INSTRUMENTOS DISPONÍVEIS:
+
+${instrumentos}
+
+REPERTÓRIO:
+
+${musicas}
+
+PLANOS ANTERIORES:
+
+${planosAnteriores}
+
+Crie plano completo.
+
+Equilibre:
+
+criação
+execução
+escuta
+movimento
+teoria emergente
+
+Não repetir atividades.
+
+`;
+
+}
+
+/* ===============================
+FORMATAR PLANO
+=============================== */
+
+function formatPlano(t){
+
+return `
+
+<div class="card">
+
+<h3>Plano gerado</h3>
+
+<pre>
+
+${t}
+
+</pre>
+
+</div>
+
+`;
+
+}
 </script>
 
 </body>
