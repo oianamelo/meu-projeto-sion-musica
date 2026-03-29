@@ -1,36 +1,39 @@
-export default async function handler(req, res) {
+export default async function handler(request, response) {
 
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
+  if (request.method === "OPTIONS") {
+    return response.status(200).end();
   }
 
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+  if (request.method !== "POST") {
+    return response.status(405).json({ error: "Method not allowed" });
   }
 
   try {
 
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "x-api-key": process.env.ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01"
-      },
-      body: JSON.stringify(req.body)
-    });
+    const anthropicResponse = await fetch(
+      "https://api.anthropic.com/v1/messages",
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "x-api-key": process.env.ANTHROPIC_API_KEY,
+          "anthropic-version": "2023-06-01"
+        },
+        body: JSON.stringify(request.body)
+      }
+    );
 
-    const data = await response.json();
+    const data = await anthropicResponse.json();
 
-    res.status(200).json(data);
+    return response.status(200).json(data);
 
   } catch (error) {
 
-    res.status(500).json({
+    return response.status(500).json({
       error: error.message
     });
 
