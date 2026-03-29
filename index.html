@@ -13,432 +13,148 @@
 :root{
 
 --amarelo:#FFD54A;
---amarelo2:#FFB300;
-
 --preto:#121212;
-
 --cinza1:#1e1e1e;
 --cinza2:#252525;
---cinza3:#2f2f2f;
-
---branco:#ffffff;
-
---verde:#48bb78;
---vermelho:#fc8181;
---azul:#667eea;
-
-}
-
-*{
-
-margin:0;
-padding:0;
-box-sizing:border-box;
 
 }
 
 body{
 
-font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto;
-
+margin:0;
+font-family:Arial;
 background:var(--preto);
-
 color:white;
 
 }
 
-/* LOGIN */
-
 .login{
 
 height:100vh;
-
 display:flex;
-
 justify-content:center;
-
 align-items:center;
-
-background:linear-gradient(135deg,var(--amarelo),var(--amarelo2));
+background:linear-gradient(135deg,#FFD54A,#FFB300);
 
 }
 
 .loginCard{
 
 background:white;
-
 color:black;
-
 padding:40px;
-
-border-radius:18px;
-
-width:360px;
-
+border-radius:15px;
+width:320px;
 text-align:center;
 
-box-shadow:0 30px 80px rgba(0,0,0,0.3);
-
 }
-
-.loginCard h1{
-
-margin-bottom:8px;
-
-}
-
-.loginCard p{
-
-color:#666;
-
-margin-bottom:20px;
-
-}
-
-.loginCard input{
-
-width:100%;
-
-padding:14px;
-
-border-radius:10px;
-
-border:2px solid #e0e0e0;
-
-margin-top:10px;
-
-font-size:15px;
-
-}
-
-.loginCard input:focus{
-
-outline:none;
-
-border-color:var(--amarelo);
-
-}
-
-.loginCard button{
-
-width:100%;
-
-margin-top:20px;
-
-padding:14px;
-
-border:none;
-
-background:var(--amarelo);
-
-border-radius:10px;
-
-font-weight:600;
-
-cursor:pointer;
-
-}
-
-/* APP */
 
 .app{
 
 display:none;
 
-height:100vh;
-
 }
-
-/* SIDEBAR */
 
 .sidebar{
 
-width:270px;
-
-background:var(--cinza1);
-
-height:100vh;
-
+width:260px;
 position:fixed;
-
 left:0;
-
 top:0;
-
+height:100vh;
+background:var(--cinza1);
 padding:20px;
 
-overflow:auto;
-
-border-right:1px solid #333;
-
 }
-
-.logo{
-
-font-size:22px;
-
-font-weight:bold;
-
-color:var(--amarelo);
-
-margin-bottom:30px;
-
-}
-
-.menuItem{
-
-padding:12px;
-
-border-radius:8px;
-
-cursor:pointer;
-
-margin-bottom:6px;
-
-transition:.2s;
-
-}
-
-.menuItem:hover{
-
-background:var(--cinza2);
-
-}
-
-.menuItem.active{
-
-background:var(--amarelo);
-
-color:black;
-
-font-weight:600;
-
-}
-
-/* MAIN */
 
 .main{
 
-margin-left:270px;
-
+margin-left:260px;
 margin-right:260px;
-
-padding:30px;
-
-min-height:100vh;
-
-width:calc(100% - 530px);
+padding:25px;
 
 }
 
-/* TOP */
+.rightPanel{
 
-.top{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-margin-bottom:20px;
-
-}
-
-.top h2{
-
-color:var(--amarelo);
+width:260px;
+position:fixed;
+right:0;
+top:0;
+height:100vh;
+background:var(--cinza1);
+padding:15px;
+overflow:auto;
 
 }
-
-/* CARD */
 
 .card{
 
 background:var(--cinza1);
-
-padding:22px;
-
-border-radius:14px;
-
-margin-bottom:20px;
-
-border:1px solid #333;
-
-}
-
-.card h3{
-
-color:var(--amarelo);
-
+padding:20px;
+border-radius:10px;
 margin-bottom:15px;
 
 }
 
-/* GRID */
-
-.grid{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-
-gap:20px;
-
-}
-
-/* STATS */
-
-.stat{
-
-background:linear-gradient(135deg,var(--cinza2),var(--cinza1));
-
-padding:20px;
-
-border-radius:12px;
-
-text-align:center;
-
-}
-
-.statNumber{
-
-font-size:34px;
-
-color:var(--amarelo);
-
-font-weight:bold;
-
-margin-top:10px;
-
-}
-
-/* BUTTON */
-
 button{
 
-background:var(--amarelo);
-
+background:#FFD54A;
 border:none;
-
-padding:12px 18px;
-
-border-radius:8px;
-
-font-weight:600;
-
+padding:10px;
+border-radius:6px;
 cursor:pointer;
 
 }
-
-button:hover{
-
-background:var(--amarelo2);
-
-}
-
-/* SECONDARY */
 
 .btn2{
 
 background:var(--cinza2);
-
 color:white;
 
-border:1px solid #444;
-
 }
-
-/* TURMA */
 
 .turma{
 
 background:var(--cinza2);
-
-padding:16px;
-
-border-radius:10px;
-
+padding:12px;
 margin-top:10px;
-
-cursor:pointer;
-
-}
-
-.turma:hover{
-
-background:#333;
-
-}
-
-.turmaNome{
-
-color:var(--amarelo);
-
-font-weight:bold;
-
-}
-
-/* FORM */
-
-.form{
-
-margin-top:10px;
-
-}
-
-.form label{
-
-font-size:13px;
-
-color:#aaa;
-
-display:block;
-
-margin-top:12px;
-
-}
-
-.form input,
-.form textarea,
-.form select{
-
-width:100%;
-
-padding:10px;
-
-margin-top:5px;
-
 border-radius:8px;
 
-border:1px solid #444;
+}
+
+.registro{
 
 background:var(--cinza2);
-
-color:white;
+padding:8px;
+margin-bottom:8px;
+border-radius:6px;
+font-size:13px;
 
 }
 
-/* MODAL */
+input,textarea,select{
+
+width:100%;
+padding:8px;
+margin-top:5px;
+background:var(--cinza2);
+border:1px solid #444;
+color:white;
+border-radius:6px;
+
+}
 
 .modal{
 
 display:none;
-
 position:fixed;
-
 top:0;
-
 left:0;
-
 right:0;
-
 bottom:0;
-
 background:rgba(0,0,0,0.8);
-
 justify-content:center;
-
 align-items:center;
 
 }
@@ -446,74 +162,9 @@ align-items:center;
 .modalBox{
 
 background:var(--cinza1);
-
-padding:30px;
-
-border-radius:16px;
-
-width:500px;
-
-max-height:90vh;
-
-overflow:auto;
-
-}
-
-/* EMPTY */
-
-.empty{
-
-color:#777;
-
-text-align:center;
-
-padding:40px;
-
-  }
-
-/* PAINEL DIREITO */
-
-.rightPanel{
-
-width:260px;
-
-background:var(--cinza1);
-
-height:100vh;
-
-position:fixed;
-
-right:0;
-
-top:0;
-
-padding:20px;
-
-border-left:1px solid #333;
-
-overflow:auto;
-
-}
-
-.rightPanel h3{
-
-color:var(--amarelo);
-
-margin-bottom:15px;
-
-}
-
-.registroItem{
-
-background:var(--cinza2);
-
-padding:10px;
-
-border-radius:8px;
-
-margin-bottom:10px;
-
-font-size:13px;
+padding:25px;
+border-radius:10px;
+width:400px;
 
 }
 
@@ -523,97 +174,31 @@ font-size:13px;
 
 <body>
 
-<!-- LOGIN -->
-
 <div class="login" id="login">
 
 <div class="loginCard">
 
-<h1>🎵 Diário Musical</h1>
+<h2>Diário Musical</h2>
 
-<p>Sistema pedagógico musical</p>
+<input type="password" id="senha">
 
-<input
-type="password"
-id="senha"
-placeholder="Senha"
-/>
-
-<button onclick="login()">
-
-Entrar
-
-</button>
+<button onclick="login()">Entrar</button>
 
 </div>
 
 </div>
-
-<!-- APP -->
 
 <div class="app" id="app">
 
 <div class="sidebar">
 
-<div class="logo">
+<h3>Diário Musical</h3>
 
-🎵 Diário Musical
+<button onclick="ir('dashboard')">Dashboard</button>
 
-</div>
+<button onclick="ir('turmas')">Turmas</button>
 
-<div
-class="menuItem active"
-onclick="ir('dashboard')"
-id="menu-dashboard">
-
-Dashboard
-
-</div>
-
-<div
-class="menuItem"
-onclick="ir('turmas')"
-id="menu-turmas">
-
-Turmas
-
-</div>
-
-<div
-class="menuItem"
-onclick="ir('planos')"
-id="menu-planos">
-
-Planos IA
-
-</div>
-
-<div
-class="menuItem"
-onclick="ir('repertorio')"
-id="menu-repertorio">
-
-Repertório
-
-</div>
-
-<div
-class="menuItem"
-onclick="ir('instrumentos')"
-id="menu-instrumentos">
-
-Instrumentos
-
-</div>
-
-<div
-class="menuItem"
-onclick="ir('config')"
-id="menu-config">
-
-Config
-
-</div>
+<button onclick="ir('planos')">Planos IA</button>
 
 </div>
 
@@ -621,259 +206,63 @@ Config
 
 <h3>Registros</h3>
 
-<div id="painelRegistros">
-
-Sem registros
+<div id="painelRegistros"></div>
 
 </div>
 
-</div>
-  
 <div class="main">
-
-<!-- DASHBOARD -->
 
 <div id="dashboard">
 
-<div class="top">
-
 <h2>Dashboard</h2>
 
-<button onclick="abrirNovaTurma()">
-
-Nova turma
-
-</button>
-
-</div>
-
-<div class="grid">
-
-<div class="stat">
-
-Turmas
-
-<div
-class="statNumber"
-id="statTurmas">
-
-0
-
-</div>
-
-</div>
-
-<div class="stat">
-
-Planos
-
-<div
-class="statNumber"
-id="statPlanos">
-
-0
-
-</div>
-
-</div>
-
-<div class="stat">
-
-Repertório
-
-<div
-class="statNumber"
-id="statMusicas">
-
-0
-
-</div>
-
-</div>
-
-<div class="stat">
-
-Instrumentos
-
-<div
-class="statNumber"
-id="statInstrumentos">
-
-0
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>Minhas turmas</h3>
+<button onclick="abrirNovaTurma()">Nova turma</button>
 
 <div id="dashTurmas"></div>
 
 </div>
 
-</div>
-
-<!-- TURMAS -->
-
-<div
-id="turmas"
-style="display:none">
-
-<div class="top">
+<div id="turmas" style="display:none">
 
 <h2>Turmas</h2>
-
-<button onclick="abrirNovaTurma()">
-
-Nova turma
-
-</button>
-
-</div>
 
 <div id="listaTurmas"></div>
 
 </div>
 
-<!-- PLANOS -->
-
-<div
-id="planos"
-style="display:none">
-
-<div class="top">
+<div id="planos" style="display:none">
 
 <h2>Planos IA</h2>
 
-</div>
+<select id="selectTurmaPlano"></select>
 
-<div class="card">
+<br><br>
 
-Turma:
+<button onclick="gerarPlanoIA()">Gerar plano novo</button>
 
-<select id="selectTurmaPlano">
+<button onclick="gerarContinuacao()">Continuação</button>
 
-<button onclick="gerarPlanoIA()">
-Gerar plano novo
-</button>
-
-<button onclick="gerarContinuacaoPlano()" class="btn2">
-Gerar continuação
-</button>
-
-<button onclick="gerarAvaliacaoIA()" class="btn2">
-Sugerir avaliação trimestral
-</button>
-
-</div>
+<button onclick="gerarAvaliacao()">Avaliação</button>
 
 <div id="areaPlano"></div>
 
 </div>
 
-<!-- REPERTORIO -->
-
-<div
-id="repertorio"
-style="display:none">
-
-<div class="top">
-
-<h2>Repertório</h2>
-
-<button onclick="abrirNovaMusica()">
-
-Nova música
-
-</button>
-
-</div>
-
-<div id="listaMusicas"></div>
-
-</div>
-
-<!-- INSTRUMENTOS -->
-
-<div
-id="instrumentos"
-style="display:none">
-
-<div class="top">
-
-<h2>Instrumentos</h2>
-
-<button onclick="abrirNovoInstrumento()">
-
-Novo instrumento
-
-</button>
-
-</div>
-
-<div id="listaInstrumentos"></div>
-
-</div>
-
-<!-- CONFIG -->
-
-<div
-id="config"
-style="display:none">
-
-<div class="top">
-
-<h2>Configurações</h2>
-
-</div>
-
-<div class="card">
-
-API Claude:
-
-<input
-type="password"
-id="apiKey"
-placeholder="sk-ant..."
-/>
-
-<br><br>
-
-<button onclick="salvarApi()">
-  
-Salvar
-
-</button>
-
 </div>
 
 </div>
 
-</div>
-
-</div>
-
-<!-- MODAL TURMA -->
-
-<div
-class="modal"
-id="modalTurma">
+<div class="modal" id="modalTurma">
 
 <div class="modalBox">
 
 <h3>Nova turma</h3>
 
-<div class="form">
-
-<label>Nome</label>
+Nome:
 
 <input id="turmaNome">
 
-<label>Faixa</label>
+Faixa:
 
 <select id="turmaFaixa">
 
@@ -881,51 +270,20 @@ id="modalTurma">
 <option>INF3</option>
 <option>INF4</option>
 <option>INF5</option>
-<option>1ANO</option>
-<option>2ANO</option>
 
 </select>
 
-<label>Duração</label>
-
-<input
-type="number"
-value="50"
-id="turmaDuracao">
-
-<label>Tema anual</label>
+Tema:
 
 <input id="turmaTema">
 
-<label>Plano anual PDF</label>
-
-<input type="file" id="turmaPDF">
-  
-<label>Objetivo trimestre</label>
+Objetivo:
 
 <textarea id="turmaObjetivo"></textarea>
 
-<label>Observações iniciais da turma</label>
+<button onclick="salvarTurma()">Salvar</button>
 
-<textarea id="turmaObs"></textarea>  
-
-</div>
-
-<br>
-
-<button onclick="salvarTurma()">
-
-Salvar
-
-</button>
-
-<button
-class="btn2"
-onclick="fecharModal('modalTurma')">
-
-Cancelar
-
-</button>
+<button onclick="fecharModal()">Cancelar</button>
 
 </div>
 
@@ -933,44 +291,30 @@ Cancelar
 
 <script>
 
-/* CONFIG */
-
 const SENHA="#acm262#diariomusical";
-
-/* DATABASE */
 
 let db={
 
 turmas:[],
-
-musicas:[],
-
-instrumentos:[],
-
 planos:[],
-
 registros:[],
+config:{apiKey:""}
 
-config:{
-
-apiKey:""
-}
-
-}  
-
-/* AUTH */
+};
 
 function login(){
 
-let s=
-
-document
-.getElementById("senha")
-.value;
+let s=document.getElementById("senha").value;
 
 if(s===SENHA){
 
-loginOk();
+document.getElementById("login").style.display="none";
+
+document.getElementById("app").style.display="block";
+
+load();
+
+renderAll();
 
 }else{
 
@@ -980,110 +324,43 @@ alert("Senha errada");
 
 }
 
-function loginOk(){
-
-document
-.getElementById("login")
-.style.display="none";
-
-document
-.getElementById("app")
-.style.display="block";
-
-load();
-
-function renderSelectTurmas(){
-
-let el =
-document.getElementById("selectTurmaPlano");
-
-if(!el)return;
-
-el.innerHTML =
-'<option value="">Escolher</option>';
-
-db.turmas.forEach(t=>{
-
-el.innerHTML +=
-`<option value="${t.id}">
-${t.nome}
-</option>`;
-
-});
-
-}  
-  
-renderAll();
-
-}
-
-/* NAV */
-
 function ir(t){
 
-["dashboard",
-"turmas",
-"planos",
-"repertorio",
-"instrumentos",
-"config"]
+["dashboard","turmas","planos"]
 
 .forEach(x=>{
 
-document
-.getElementById(x)
-.style.display="none";
-
-document
-.getElementById("menu-"+x)
-.classList.remove("active");
+document.getElementById(x).style.display="none";
 
 });
 
-document
-.getElementById(t)
-.style.display="block";
-
-document
-.getElementById("menu-"+t)
-.classList.add("active");
+document.getElementById(t).style.display="block";
 
 }
 
-/* STORAGE */
-
 function save(){
 
-localStorage
-.setItem(
-"diario3",
-JSON.stringify(db)
-);
+localStorage.setItem("diario",JSON.stringify(db));
 
 }
 
 function load(){
 
-let d=
+let d=localStorage.getItem("diario");
 
-localStorage
-.getItem("diario3");
-
-if(d){
-
-db=JSON.parse(d);
+if(d) db=JSON.parse(d);
 
 }
-
-}
-
-/* TURMAS */
 
 function abrirNovaTurma(){
 
-document
-.getElementById("modalTurma")
-.style.display="flex";
+document.getElementById("modalTurma").style.display="flex";
+
+}
+
+function fecharModal(){
+
+document.getElementById("modalTurma").style.display="none";
 
 }
 
@@ -1093,36 +370,17 @@ let t={
 
 id:Date.now(),
 
-nome:
-document.getElementById("turmaNome").value,
+nome:turmaNome.value,
 
-faixa:
-document.getElementById("turmaFaixa").value,
+faixa:turmaFaixa.value,
 
-duracao:
-parseInt(
-document.getElementById("turmaDuracao").value
-),
+tema:turmaTema.value,
 
-tema:
-document.getElementById("turmaTema").value,
-
-objetivo:
-document.getElementById("turmaObjetivo").value,
-
-dificuldade:"",
+objetivo:turmaObjetivo.value,
 
 alunos:[],
 
-planos:[],
-
-observacoes:[],
-
-avaliacoes:[],
-
-instrumentosUsados:[],
-
-repertorioUsado:[]
+planos:[]
 
 };
 
@@ -1130,51 +388,41 @@ db.turmas.push(t);
 
 save();
 
-fecharModal("modalTurma");
+fecharModal();
+
+renderAll();
+
+}
+
+function renderAll(){
 
 renderTurmas();
 
 renderDashboard();
-  
-renderSelectTurmas();
+
+renderSelect();
+
+renderRegistros();
 
 }
 
 function renderTurmas(){
 
-let el=
-document
-.getElementById("listaTurmas");
+let el=listaTurmas;
 
-if(db.turmas.length===0){
+el.innerHTML="";
 
-el.innerHTML=
+db.turmas.forEach(t=>{
 
-'<div class=empty>Sem turmas</div>';
+el.innerHTML+=`
 
-return;
-
-}
-
-el.innerHTML=
-
-db.turmas.map(t=>
-
-`
 <div class="turma">
 
-<div class="turmaNome">
-
-${t.nome}
-
-</div>
-
-${t.tema}
+<b>${t.nome}</b>
 
 <br>
 
-<button
-onclick="abrirTurma(${t.id})">
+<button onclick="abrirTurma(${t.id})">
 
 Abrir
 
@@ -1182,131 +430,73 @@ Abrir
 
 </div>
 
-`
+`;
 
-).join("");
+});
 
 }
 
-/* DASH */
-
 function renderDashboard(){
 
-document
-.getElementById("statTurmas")
-.innerText=
+dashTurmas.innerHTML="";
 
-db.turmas.length;
+db.turmas.forEach(t=>{
 
-document
-.getElementById("statPlanos")
-.innerText=
+dashTurmas.innerHTML+=`
 
-db.planos.length;
-
-document
-.getElementById("statMusicas")
-.innerText=
-
-db.musicas.length;
-
-document
-.getElementById("statInstrumentos")
-.innerText=
-
-db.instrumentos.length;
-
-let el=
-document
-.getElementById("dashTurmas");
-
-el.innerHTML=
-
-db.turmas.map(t=>
-
-`
 <div class="turma">
 
 ${t.nome}
 
 </div>
 
-`
+`;
 
-).join("");
-
-}
-
-/* GLOBAL */
-
-function renderAll(){
-  
-renderDashboard();
-
-renderTurmas();
-
-renderSelectTurmas();
-  
-renderRegistros();
+});
 
 }
 
-/* MODAL */
+function renderSelect(){
 
-function fecharModal(id){
+let el=selectTurmaPlano;
 
-document
-.getElementById(id)
-.style.display="none";
+el.innerHTML="<option value=''>Escolher</option>";
+
+db.turmas.forEach(t=>{
+
+el.innerHTML+=`
+
+<option value="${t.id}">
+
+${t.nome}
+
+</option>
+
+`;
+
+});
 
 }
-
-  /* ===============================
-TURMA DETALHE (PASTA PEDAGÓGICA)
-=============================== */
 
 let turmaAtual=null;
 
 function abrirTurma(id){
 
-turmaAtual=
-db.turmas.find(t=>t.id===id);
-
-if(!turmaAtual)return;
+turmaAtual=db.turmas.find(t=>t.id===id);
 
 ir("turmas");
 
-document
-.getElementById("listaTurmas")
-.innerHTML=
-
-renderTurmaDetalhe(turmaAtual);
-
-}
-
-function renderTurmaDetalhe(t){
-
-return `
+listaTurmas.innerHTML=`
 
 <div class="card">
 
-<h3>${t.nome}</h3>
+<h3>${turmaAtual.nome}</h3>
 
-Faixa: ${t.faixa}
-
-<br>
-
-Tema anual:
-${t.tema||"-"}
-
-<br>
-
-Objetivo:
-${t.objetivo||"-"}
+Tema: ${turmaAtual.tema}
 
 <br><br>
 
-<button onclick="abrirNovoAluno()">
+<button onclick="novoAluno()">
 
 Novo aluno
 
@@ -1314,131 +504,49 @@ Novo aluno
 
 </div>
 
-
-<div class="card">
-
-<h3>Alunos</h3>
-
-${renderAlunos(t)}
-
-</div>
-
-
-<div class="card">
-
-<h3>Planos</h3>
-
-${renderPlanosTurma(t)}
-
-</div>
-
 `;
 
 }
 
-/* ===============================
-ALUNOS
-=============================== */
+function novoAluno(){
 
-function abrirNovoAluno(){
-
-let nome=
-
-prompt("Nome aluno");
+let nome=prompt("Aluno");
 
 if(!nome)return;
 
-let a={
+turmaAtual.alunos.push({
 
 id:Date.now(),
 
-nome,
-
-perfil:"",
-
-dificuldades:"",
+nome:nome,
 
 registros:[]
 
-};
-
-turmaAtual.alunos.push(a);
+});
 
 save();
 
-abrirTurma(turmaAtual.id);
-
 }
 
-function renderAlunos(t){
+function registrar(aluno){
 
-if(t.alunos.length===0){
+let texto=prompt("Registro");
 
-return"Sem alunos";
+let r={
 
-}
-
-return t.alunos.map(a=>`
-
-<div class="turma">
-
-${a.nome}
-
-<br>
-
-<button
-onclick="registrarAluno(${a.id})">
-
-Registrar evolução
-
-</button>
-
-</div>
-
-`).join("");
-
-}
-
-function registrarAluno(id){
-
-let aluno=
-turmaAtual.alunos
-.find(a=>a.id===id);
-
-let tipo=
-prompt(
-"Tipo:\n1 comportamento\n2 musical\n3 dificuldade\n4 destaque"
-);
-
-let texto=
-prompt("Descreva o ocorrido");
-
-if(!texto)return;
-
-let registro={
-
-id:Date.now(),
-
-data:new Date()
-.toLocaleDateString(),
-
-tipo:tipo,
+data:new Date().toLocaleDateString(),
 
 texto:texto,
 
 aluno:aluno.nome,
 
-turma:turmaAtual.nome,
-
-impacto:"",
-
-proximoPasso:""
+turma:turmaAtual.nome
 
 };
 
-aluno.registros.push(registro);
+aluno.registros.push(r);
 
-db.registros.push(registro);
+db.registros.push(r);
 
 save();
 
@@ -1446,433 +554,17 @@ renderRegistros();
 
 }
 
-/* ===============================
-PLANOS TURMA
-=============================== */
-
-function renderPlanosTurma(t){
-
-if(t.planos.length===0){
-
-return"Sem planos";
-
-}
-
-return t.planos.map(p=>`
-
-<div class="turma">
-
-${p.data}
-
-<br>
-
-<button
-onclick="verPlano(${p.id})">
-
-Ver
-
-</button>
-
-</div>
-
-`).join("");
-
-}
-
-/* ===============================
-IA PEDAGÓGICA
-=============================== */
-
-async function gerarPlanoIA(){
-
-let id =
-document.getElementById("selectTurmaPlano").value;
-
-let turma =
-db.turmas.find(t=>t.id==id);
-
-if(!turma){
-alert("Escolha turma");
-return;
-}
-
-let prompt =
-montarPrompt(turma);
-
-enviarParaClaude(prompt,turma);
-
-}  
-
-async function gerarContinuacaoPlano(){
-
-let id =
-document.getElementById("selectTurmaPlano").value;
-
-let turma =
-db.turmas.find(t=>t.id==id);
-
-if(!turma){
-alert("Escolha turma");
-return;
-}
-
-let ultimoPlano =
-turma.planos.length ?
-turma.planos[turma.planos.length-1].conteudo :
-"";
-
-let prompt = `
-
-Você é especialista em educação musical.
-
-Continue a sequência pedagógica da aula anterior.
-
-AULA ANTERIOR:
-${ultimoPlano}
-
-Crie a próxima aula considerando progressão pedagógica.
-
-Evite repetir atividades.
-
-Inclua:
-
-objetivo
-aquecimento
-atividade principal
-criação musical
-encerramento
-avaliação observacional
-
-`;
-
-enviarParaClaude(prompt);
-
-}
-
-async function gerarAvaliacaoIA(){
-
-let id =
-document.getElementById("selectTurmaPlano").value;
-
-let turma =
-db.turmas.find(t=>t.id==id);
-
-if(!turma){
-alert("Escolha turma");
-return;
-}
-
-let registros =
-db.registros
-.filter(r=>r.turma===turma.nome)
-.map(r=>r.aluno + ": " + r.texto)
-.join("\n");
-
-let prompt = `
-
-Você é especialista em avaliação em educação musical infantil.
-
-Analise os registros pedagógicos abaixo e gere
-uma avaliação trimestral da turma.
-
-REGISTROS:
-${registros}
-
-Crie:
-
-pontos de desenvolvimento musical
-aspectos sociais observados
-dificuldades
-sugestões pedagógicas
-
-`;
-
-enviarParaClaude(prompt);
-
-}
-
-async function enviarParaClaude(prompt,turma){
-
-document
-.getElementById("areaPlano")
-.innerHTML="Gerando...";
-
-try{
-
-let r =
-await fetch("/api/claude",{
-
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({prompt})
-
-});
-
-let data =
-await r.json();
-
-let texto =
-data?.text || "Erro IA";
-
-if(turma){
-
-let plano={
-
-id:Date.now(),
-
-data:new Date()
-.toLocaleDateString(),
-
-conteudo:texto
-
-};
-
-turma.planos.push(plano);
-
-db.planos.push(plano);
-
-save();
-
-}
-
-document
-.getElementById("areaPlano")
-.innerHTML=
-formatPlano(texto);
-  
-let prompt=
-montarPrompt(turma);
-
-document
-.getElementById("areaPlano")
-.innerHTML="Gerando...";
-
-try{
-
-let r=
-
-await fetch(
-
-"/api/claude",
-
-{
-
-method:"POST",
-
-headers:{
-
-"Content-Type":
-"application/json"
-
-},
-
-body:
-
-JSON.stringify({
-
-prompt
-
-})
-
-}
-
-);
-
-let data=
-await r.json();
-
-let texto=
-data?.text || "Erro IA";
-
-let plano={
-
-id:Date.now(),
-
-data:new Date()
-.toLocaleDateString(),
-
-conteudo:texto
-
-};
-
-turma.planos.push(plano);
-
-db.planos.push(plano);
-
-save();
-
-document
-.getElementById("areaPlano")
-.innerHTML=
-formatPlano(texto);
-
-}catch(e){
-
-alert("Erro IA");
-
-}
-
-}
-/* ===============================
-PROMPT INTELIGENTE
-=============================== */
-
-function montarPrompt(t){
-
-let instrumentos=
-db.instrumentos
-.map(i=>i.nome)
-.join(", ");
-
-let musicas=
-db.musicas
-.map(m=>m.nome)
-.join(", ");
-
-let planosAnteriores=
-
-t.planos
-.map(p=>p.conteudo)
-.slice(-3)
-.join("\n");
-
-let registrosTurma=
-
-db.registros
-.filter(r=>r.turma===t.nome)
-.slice(-10)
-.map(r=>
-
-r.aluno + ": " + r.texto
-
-)
-.join("\n");
-
-return `
-
-Você é especialista em educação musical infantil.
-
-BASE PEDAGÓGICA:
-
-BNCC
-ABEM
-ISME
-DGE Portugal
-
-CONTEXTO DA TURMA:
-
-Nome:
-${t.nome}
-
-Faixa:
-${t.faixa}
-
-Tema anual:
-${t.tema}
-
-Objetivo trimestral:
-${t.objetivo}
-
-Dificuldades observadas:
-${t.dificuldade}
-
-HISTÓRICO RECENTE:
-
-${planosAnteriores}
-
-REGISTROS PEDAGÓGICOS:
-
-${registrosTurma}
-
-INSTRUMENTOS DISPONÍVEIS:
-
-${instrumentos}
-
-REPERTÓRIO DISPONÍVEL:
-
-${musicas}
-
-REGRAS:
-
-Não repetir atividades recentes.
-
-Garantir progressão pedagógica.
-
-Equilibrar:
-
-escuta
-criação
-movimento
-ritmo
-canto
-exploração sonora
-
-Considerar dificuldades reais.
-
-Criar plano estruturado com:
-
-Objetivo
-Aquecimento
-Atividade principal
-Uso de instrumentos
-Criação musical
-Encerramento
-Avaliação observacional
-
-`;
-
-}
-
-/* ===============================
-FORMATAR PLANO
-=============================== */
-
-function formatPlano(t){
-
-return `
-
-<div class="card">
-
-<h3>Plano gerado</h3>
-
-<pre>
-
-${t}
-
-</pre>
-
-</div>
-
-`;
-
-}
-
 function renderRegistros(){
 
-let el=
-document.getElementById("painelRegistros");
+painelRegistros.innerHTML="";
 
-if(!db.registros || db.registros.length===0){
+db.registros.slice(-20).reverse()
 
-el.innerHTML="Sem registros";
+.forEach(r=>{
 
-return;
+painelRegistros.innerHTML+=`
 
-}
-
-el.innerHTML=
-
-db.registros
-.slice(-30)
-.reverse()
-.map(r=>
-
-`
-<div class="registroItem">
+<div class="registro">
 
 <b>${r.aluno}</b>
 
@@ -1882,39 +574,148 @@ ${r.texto}
 
 <br>
 
-<small>
-
 ${r.turma}
-
-</small>
-
-<br>
-
-<small>
-
-${r.data}
-
-</small>
 
 </div>
 
-`
+`;
 
-).join("");
+});
 
 }
 
-function salvarApi(){
+async function gerarPlanoIA(){
 
-db.config.apiKey =
-document.getElementById("apiKey").value;
+let id=selectTurmaPlano.value;
+
+let turma=db.turmas.find(t=>t.id==id);
+
+if(!turma){
+
+alert("Escolha turma");
+
+return;
+
+}
+
+let prompt=`
+
+Crie plano de aula musical.
+
+Turma: ${turma.nome}
+
+Tema: ${turma.tema}
+
+Objetivo: ${turma.objetivo}
+
+`;
+
+enviarIA(prompt,turma);
+
+}
+
+async function gerarContinuacao(){
+
+let id=selectTurmaPlano.value;
+
+let turma=db.turmas.find(t=>t.id==id);
+
+let ultimo=
+
+turma.planos.length?
+
+turma.planos[turma.planos.length-1].conteudo:
+
+"";
+
+let prompt=
+
+"Continue a sequência pedagógica:\n"+ultimo;
+
+enviarIA(prompt,turma);
+
+}
+
+async function gerarAvaliacao(){
+
+let id=selectTurmaPlano.value;
+
+let turma=db.turmas.find(t=>t.id==id);
+
+let registros=
+
+db.registros
+
+.filter(r=>r.turma===turma.nome)
+
+.map(r=>r.texto)
+
+.join("\n");
+
+let prompt=
+
+"Crie avaliação pedagógica:\n"+registros;
+
+enviarIA(prompt);
+
+}
+
+async function enviarIA(prompt,turma){
+
+areaPlano.innerHTML="Gerando...";
+
+try{
+
+let r=await fetch("/api/claude",{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({prompt})
+
+});
+
+let data=await r.json();
+
+let texto=data.text;
+
+if(turma){
+
+let plano={
+
+id:Date.now(),
+
+data:new Date().toLocaleDateString(),
+
+conteudo:texto
+
+};
+
+turma.planos.push(plano);
+
+db.planos.push(plano);
 
 save();
 
-alert("API salva");
+}
 
-}  
-  
+areaPlano.innerHTML=
+
+"<pre>"+texto+"</pre>";
+
+}catch{
+
+alert("Erro IA");
+
+}
+
+}
+
 </script>
 
 </body>
