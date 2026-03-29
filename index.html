@@ -3,1013 +3,569 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gerador de Planos de Aula - Educação Musical</title>
+
+<title>Diário Musical</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+
+:root{
+--amarelo:#FFD54A;
+--preto:#121212;
+--cinza:#2a2a2a;
+--cinza2:#1e1e1e;
+--branco:#ffffff;
+--card:#202020;
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
-  padding: 20px;
+body{
+margin:0;
+font-family:system-ui;
+background:var(--preto);
+color:white;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
+.login{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(135deg,#FFD54A,#FFB300);
 }
 
-.header {
-  background: white;
-  border-radius: 16px;
-  padding: 30px;
-  margin-bottom: 20px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+.loginCard{
+background:white;
+padding:40px;
+border-radius:12px;
+width:320px;
+text-align:center;
+color:black;
 }
 
-.header h1 {
-  color: #2d3748;
-  font-size: 28px;
-  margin-bottom: 8px;
+.loginCard input{
+width:100%;
+padding:12px;
+margin-top:15px;
+border-radius:8px;
+border:1px solid #ccc;
 }
 
-.header p {
-  color: #718096;
-  font-size: 15px;
+.loginCard button{
+width:100%;
+margin-top:15px;
+padding:12px;
+border:none;
+background:#FFD54A;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
 }
 
-.main-content {
-  display: grid;
-  grid-template-columns: 380px 1fr;
-  gap: 20px;
+.app{
+display:none;
+height:100vh;
 }
 
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.sidebar{
+width:260px;
+background:var(--cinza2);
+padding:20px;
+position:fixed;
+height:100%;
 }
 
-.card {
-  background: white;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+.logo{
+font-size:22px;
+font-weight:bold;
+color:var(--amarelo);
+margin-bottom:30px;
 }
 
-.card h2 {
-  font-size: 18px;
-  color: #2d3748;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.menuItem{
+padding:12px;
+border-radius:8px;
+cursor:pointer;
+margin-bottom:6px;
 }
 
-.form-group {
-  margin-bottom: 18px;
+.menuItem:hover{
+background:var(--cinza);
 }
 
-.form-group label {
-  display: block;
-  font-size: 13px;
-  font-weight: 500;
-  color: #4a5568;
-  margin-bottom: 6px;
+.main{
+margin-left:260px;
+padding:30px;
 }
 
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: all 0.2s;
+.card{
+background:var(--card);
+padding:20px;
+border-radius:12px;
+margin-bottom:20px;
 }
 
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+button{
+background:var(--amarelo);
+border:none;
+padding:10px 16px;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
 }
 
-.turmas-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-height: 200px;
-  overflow-y: auto;
+input,select,textarea{
+background:#2a2a2a;
+border:1px solid #444;
+color:white;
+padding:10px;
+border-radius:8px;
+width:100%;
+margin-top:6px;
 }
 
-.turma-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background: #f7fafc;
-  border-radius: 8px;
-  font-size: 13px;
+.turma{
+background:#2a2a2a;
+padding:15px;
+border-radius:10px;
+margin-top:10px;
+cursor:pointer;
 }
 
-.turma-item strong {
-  color: #2d3748;
+.turma:hover{
+background:#333;
 }
 
-.turma-item span {
-  color: #718096;
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
 }
 
-.turma-item button {
-  background: #fed7d7;
-  color: #c53030;
-  border: none;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 11px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.turma-item button:hover {
-  background: #fc8181;
-  color: white;
-}
-
-.btn-remover {
-  background: #fed7d7;
-  color: #c53030;
-  border: none;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 11px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-remover:hover {
-  background: #fc8181;
-  color: white;
-}
-
-.btn {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.btn-primary {
-  background: #667eea;
-  color: white;
-}
-
-.btn-primary:hover {
-  background: #5a67d8;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-}
-
-.btn-secondary {
-  background: #48bb78;
-  color: white;
-  margin-top: 10px;
-}
-
-.btn-secondary:hover {
-  background: #38a169;
-  transform: translateY(-1px);
-}
-
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none !important;
-}
-
-.output-area {
-  background: white;
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  min-height: 600px;
-}
-
-.loading {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
-}
-
-.loading.active {
-  display: flex;
-}
-
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid #e2e8f0;
-  border-top-color: #667eea;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.loading p {
-  margin-top: 20px;
-  color: #718096;
-  font-size: 15px;
-}
-
-.plano-content {
-  display: none;
-  animation: fadeIn 0.3s;
-}
-
-.plano-content.active {
-  display: block;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.plano-content h3 {
-  color: #2d3748;
-  font-size: 20px;
-  margin: 24px 0 12px 0;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #e2e8f0;
-}
-
-.plano-content h4 {
-  color: #4a5568;
-  font-size: 16px;
-  margin: 16px 0 8px 0;
-}
-
-.plano-content p,
-.plano-content li {
-  color: #2d3748;
-  line-height: 1.7;
-  margin-bottom: 8px;
-}
-
-.plano-content ul {
-  margin-left: 20px;
-}
-
-.badge {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-right: 8px;
-}
-
-.badge-info {
-  background: #bee3f8;
-  color: #2c5282;
-}
-
-.badge-success {
-  background: #c6f6d5;
-  color: #22543d;
-}
-
-.empty-state {
-  text-align: center;
-  padding: 80px 20px;
-  color: #a0aec0;
-}
-
-.empty-state svg {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 20px;
-  opacity: 0.3;
-}
-
-.modal-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 1000;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-.modal-overlay.active {
-  display: flex;
-}
-
-.modal {
-  background: white;
-  border-radius: 16px;
-  padding: 30px;
-  max-width: 600px;
-  width: 100%;
-  max-height: 80vh;
-  overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-}
-
-.modal h3 {
-  color: #2d3748;
-  font-size: 20px;
-  margin-bottom: 20px;
-}
-
-.modal textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 14px;
-  font-family: inherit;
-  min-height: 120px;
-  resize: vertical;
-  margin-bottom: 20px;
-}
-
-.modal textarea:focus {
-  outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-.modal-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-}
-
-.btn-cancel {
-  background: #e2e8f0;
-  color: #2d3748;
-}
-
-.btn-cancel:hover {
-  background: #cbd5e0;
-}
-
-.btn-obs {
-  background: #f7fafc;
-  color: #4a5568;
-  border: 1.5px solid #e2e8f0;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 11px;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-left: 8px;
-}
-
-.btn-obs:hover {
-  background: #edf2f7;
-  border-color: #cbd5e0;
-}
-
-.obs-badge {
-  background: #bee3f8;
-  color: #2c5282;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 10px;
-  font-weight: 600;
-  margin-left: 8px;
-}
-
-@media (max-width: 968px) {
-  .main-content {
-    grid-template-columns: 1fr;
-  }
-}
 </style>
 </head>
+
 <body>
 
-<div class="container">
-  <div class="header">
-    <h1>🎵 Gerador Automático de Planos de Aula</h1>
-    <p>Educação Musical · BNCC + ABEM + ISME + DGE Portugal · Educação Infantil e Fundamental I</p>
-  </div>
+<div class="login" id="login">
 
-  <div class="main-content">
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-      <!-- Configuração Inicial -->
-      <div class="card">
-        <h2>⚙️ Configuração Inicial</h2>
-        
-        <div class="form-group">
-          <label>Chave da API Anthropic (obrigatória) 🔑</label>
-          <input type="password" id="apiKey" placeholder="sk-ant-...">
-          <small style="color: #718096; font-size: 11px; display: block; margin-top: 4px;">
-            Obtenha em: <a href="https://console.anthropic.com/" target="_blank" style="color: #667eea;">console.anthropic.com</a>
-          </small>
-        </div>
+<div class="loginCard">
 
-        <div class="form-group">
-          <label>Sua escola/instituição</label>
-          <input type="text" id="escola" placeholder="Ex: EMEF João Silva">
-        </div>
+<h2>Diário Musical</h2>
 
-        <div class="form-group">
-          <label>Seu nome</label>
-          <input type="text" id="professor" placeholder="Ex: Maria Santos">
-        </div>
+<p>acesso do professor</p>
 
-        <div class="form-group">
-          <label>Semana de referência</label>
-          <input type="date" id="semana">
-        </div>
-      </div>
+<input type="password" id="senha">
 
-      <!-- Adicionar Turma -->
-      <div class="card">
-        <h2>➕ Adicionar Turma</h2>
-        
-        <div class="form-group">
-          <label>Nome da turma</label>
-          <input type="text" id="nomeTurma" placeholder="Ex: INF 4 - Tarde">
-        </div>
+<button onclick="login()">
+Entrar
+</button>
 
-        <div class="form-group">
-          <label>Faixa etária</label>
-          <select id="faixaEtaria">
-            <option value="">Selecione...</option>
-            <option value="INF2">INF 2 (2-3 anos)</option>
-            <option value="INF3">INF 3 (3-4 anos)</option>
-            <option value="INF4">INF 4 (4-5 anos)</option>
-            <option value="INF5">INF 5 (5-6 anos)</option>
-            <option value="1ANO">1º Ano (6-7 anos)</option>
-            <option value="2ANO">2º Ano (7-8 anos)</option>
-            <option value="3ANO">3º Ano (8-9 anos)</option>
-            <option value="4ANO">4º Ano (9-10 anos)</option>
-            <option value="5ANO">5º Ano (10-11 anos)</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Duração da aula (min)</label>
-          <input type="number" id="duracao" value="45" min="30" max="120">
-        </div>
-
-        <button class="btn btn-primary" id="btnAdicionarTurma">
-          <span>➕</span> Adicionar Turma
-        </button>
-      </div>
-
-      <!-- Minhas Turmas -->
-      <div class="card">
-        <h2>📚 Minhas Turmas</h2>
-        <div class="turmas-list" id="turmasList">
-          <p style="color: #a0aec0; font-size: 13px; text-align: center;">Nenhuma turma cadastrada ainda</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ÁREA DE OUTPUT -->
-    <div class="output-area">
-      <div class="empty-state" id="emptyState">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-        </svg>
-        <p style="font-size: 15px; margin-bottom: 30px;">Seus planos de aula aparecerão aqui</p>
-        <button class="btn btn-secondary" id="btnGerar" style="max-width: 300px; margin: 0 auto;" disabled>
-          <span>✨</span> Gerar Planos da Semana
-        </button>
-      </div>
-
-      <div class="loading" id="loading">
-        <div class="spinner"></div>
-        <p>Gerando planos de aula com IA...</p>
-        <p style="font-size: 13px; color: #a0aec0; margin-top: 8px;">Isso pode levar alguns segundos</p>
-      </div>
-
-      <div class="plano-content" id="planoContent"></div>
-    </div>
-  </div>
 </div>
 
-<!-- Modal de Observações -->
-<div class="modal-overlay" id="modalObservacoes">
-  <div class="modal">
-    <h3>📝 Observações da Aula</h3>
-    <p style="color: #718096; font-size: 14px; margin-bottom: 16px;">
-      O que aconteceu de diferente do planejado? Anote aqui para que o próximo plano considere a realidade da aula.
-    </p>
-    
-    <label style="display: block; font-size: 13px; font-weight: 500; color: #4a5568; margin-bottom: 8px;">
-      Turma: <span id="modalTurmaNome" style="color: #667eea;"></span>
-    </label>
-    
-    <textarea id="observacoesTexto" placeholder="Ex: Os alunos adoraram a atividade de percussão corporal e pediram para repetir. Não deu tempo de fazer a conexão teórica. Metade da turma ainda tem dificuldade com pulso vs ritmo."></textarea>
-    
-    <div class="modal-actions">
-      <button class="btn btn-cancel" onclick="fecharModalObservacoes()">Cancelar</button>
-      <button class="btn btn-primary" onclick="salvarObservacoes()" style="width: auto; padding: 12px 24px;">Salvar</button>
-    </div>
-  </div>
+</div>
+
+<div class="app" id="app">
+
+<div class="sidebar">
+
+<div class="logo">
+🎵 Diário Musical
+</div>
+
+<div class="menuItem" onclick="abrir('dashboard')">
+Dashboard
+</div>
+
+<div class="menuItem" onclick="abrir('turmas')">
+Turmas
+</div>
+
+<div class="menuItem" onclick="abrir('repertorio')">
+Repertório
+</div>
+
+<div class="menuItem" onclick="abrir('instrumentos')">
+Instrumentos
+</div>
+
+<div class="menuItem" onclick="abrir('backup')">
+Backup
+</div>
+
+</div>
+
+<div class="main">
+
+<div id="dashboard">
+
+<div class="top">
+
+<h2>Dashboard</h2>
+
+<button onclick="novaTurma()">
+Nova turma
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>Resumo pedagógico</h3>
+
+<p id="resumo">
+Nenhuma turma ainda
+</p>
+
+</div>
+
+</div>
+
+<div id="turmas" style="display:none">
+
+<h2>Turmas</h2>
+
+<div class="card">
+
+<h3>Nova turma</h3>
+
+<label>Nome</label>
+<input id="nomeTurma">
+
+<label>Faixa</label>
+
+<select id="faixa">
+
+<option>INF2</option>
+<option>INF3</option>
+<option>INF4</option>
+<option>INF5</option>
+<option>1ANO</option>
+<option>2ANO</option>
+<option>3ANO</option>
+<option>4ANO</option>
+<option>5ANO</option>
+
+</select>
+
+<label>Tema anual</label>
+<input id="tema">
+
+<label>Objetivo trimestre</label>
+<input id="objetivo">
+
+<label>Dificuldades</label>
+<textarea id="dificuldades"></textarea>
+
+<button onclick="salvarTurma()">
+Salvar turma
+</button>
+
+</div>
+
+<div id="listaTurmas"></div>
+
+</div>
+
+<div id="repertorio" style="display:none">
+
+<h2>Repertório</h2>
+
+<div class="card">
+
+<input id="musica" placeholder="nome">
+
+<input id="artista" placeholder="artista">
+
+<input id="spotify" placeholder="spotify">
+
+<button onclick="salvarMusica()">
+Salvar
+</button>
+
+</div>
+
+<div id="listaMusicas"></div>
+
+</div>
+
+<div id="instrumentos" style="display:none">
+
+<h2>Instrumentos</h2>
+
+<div class="card">
+
+<input id="instrumento">
+
+<button onclick="salvarInstrumento()">
+Adicionar
+</button>
+
+</div>
+
+<div id="listaInstrumentos"></div>
+
+</div>
+
+<div id="backup" style="display:none">
+
+<h2>Backup</h2>
+
+<div class="card">
+
+<button onclick="exportar()">
+Exportar JSON
+</button>
+
+<input type="file" onchange="importar(event)">
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 <script>
-// Estado global
-let turmas = [];
-let planosAnteriores = {};
-let turmaAtualObservacoes = null;
 
-// Configuração da data atual
-document.getElementById('semana').valueAsDate = new Date();
+const senhaSistema="#acm262#diariomusical"
 
-// Adicionar turma
-function adicionarTurma() {
-  const nome = document.getElementById('nomeTurma').value.trim();
-  const faixa = document.getElementById('faixaEtaria').value;
-  const duracao = document.getElementById('duracao').value;
+function login(){
 
-  if (!nome || !faixa) {
-    alert('Preencha o nome e a faixa etária da turma');
-    return;
-  }
+if(
+document.getElementById("senha").value
+===senhaSistema
+){
 
-  const turma = {
-    id: Date.now(),
-    nome,
-    faixa,
-    duracao: parseInt(duracao),
-    ultimaAula: null
-  };
+document.getElementById("login").style.display="none"
 
-  turmas.push(turma);
-  salvarDados();
-  renderizarTurmas();
-  
-  // Limpar campos
-  document.getElementById('nomeTurma').value = '';
-  document.getElementById('faixaEtaria').value = '';
-  document.getElementById('duracao').value = '45';
+document.getElementById("app").style.display="block"
 
-  // Habilitar botão de gerar
-  document.getElementById('btnGerar').disabled = false;
+carregar()
+
+}
+else{
+
+alert("senha incorreta")
+
 }
 
-// Remover turma
-function removerTurma(id) {
-  if (confirm('Remover esta turma?')) {
-    turmas = turmas.filter(t => t.id !== id);
-    salvarDados();
-    renderizarTurmas();
-    if (turmas.length === 0) {
-      document.getElementById('btnGerar').disabled = true;
-    }
-  }
 }
 
-// Renderizar lista de turmas
-function renderizarTurmas() {
-  const lista = document.getElementById('turmasList');
-  
-  if (turmas.length === 0) {
-    lista.innerHTML = '<p style="color: #a0aec0; font-size: 13px; text-align: center;">Nenhuma turma cadastrada ainda</p>';
-    return;
-  }
+const supabase=
+supabase.createClient(
+"https://yyunoxlgbnxgjixzahce.supabase.co",
+"sb_publishable_n7SpGZZSRG_hyomw3rnuNw_bknbpFnq"
+)
 
-  lista.innerHTML = turmas.map(t => `
-    <div class="turma-item">
-      <div>
-        <strong>${t.nome}</strong>
-        ${t.observacoes ? '<span class="obs-badge">📝 Com obs.</span>' : ''}
-        <br>
-        <span>${getFaixaLabel(t.faixa)} · ${t.duracao}min</span>
-      </div>
-      <div style="display: flex; gap: 6px;">
-        <button class="btn-obs" data-id="${t.id}">📝 Obs.</button>
-        <button class="btn-remover" data-id="${t.id}">Remover</button>
-      </div>
-    </div>
-  `).join('');
-  
-  // Adicionar event listeners aos botões de observações
-  document.querySelectorAll('.btn-obs').forEach(btn => {
-    btn.addEventListener('click', function() {
-      abrirModalObservacoes(parseInt(this.getAttribute('data-id')));
-    });
-  });
-  
-  // Adicionar event listeners aos botões de remover
-  document.querySelectorAll('.btn-remover').forEach(btn => {
-    btn.addEventListener('click', function() {
-      removerTurma(parseInt(this.getAttribute('data-id')));
-    });
-  });
+let database={
+
+turmas:[],
+musicas:[],
+instrumentos:[]
+
 }
 
-// Labels das faixas
-function getFaixaLabel(faixa) {
-  const labels = {
-    'INF2': 'INF 2 (2-3 anos)',
-    'INF3': 'INF 3 (3-4 anos)',
-    'INF4': 'INF 4 (4-5 anos)',
-    'INF5': 'INF 5 (5-6 anos)',
-    '1ANO': '1º Ano',
-    '2ANO': '2º Ano',
-    '3ANO': '3º Ano',
-    '4ANO': '4º Ano',
-    '5ANO': '5º Ano'
-  };
-  return labels[faixa] || faixa;
+function salvarLocal(){
+
+localStorage.setItem(
+"diario",
+JSON.stringify(database)
+)
+
 }
 
-// Salvar dados no localStorage
-function salvarDados() {
-  localStorage.setItem('turmas_musica', JSON.stringify(turmas));
-  localStorage.setItem('planos_anteriores', JSON.stringify(planosAnteriores));
-  
-  // Salvar API key (opcional - o usuário pode preferir não salvar)
-  const apiKey = document.getElementById('apiKey').value.trim();
-  if (apiKey) {
-    localStorage.setItem('api_key_anthropic', apiKey);
-  }
+function carregar(){
+
+let dados=
+localStorage.getItem("diario")
+
+if(dados){
+
+database=
+JSON.parse(dados)
+
 }
 
-// Carregar dados
-function carregarDados() {
-  const turmasSalvas = localStorage.getItem('turmas_musica');
-  const planosSalvos = localStorage.getItem('planos_anteriores');
-  const apiKeySalva = localStorage.getItem('api_key_anthropic');
-  
-  if (turmasSalvas) {
-    turmas = JSON.parse(turmasSalvas);
-    renderizarTurmas();
-    if (turmas.length > 0) {
-      document.getElementById('btnGerar').disabled = false;
-    }
-  }
-  
-  if (planosSalvos) {
-    planosAnteriores = JSON.parse(planosSalvos);
-  }
-  
-  if (apiKeySalva) {
-    document.getElementById('apiKey').value = apiKeySalva;
-  }
+render()
+
 }
 
-// Gerar planos da semana
-async function gerarPlanosSemana() {
-  let apiKey = document.getElementById('apiKey').value.trim();
-  const escola = document.getElementById('escola').value.trim();
-  const professor = document.getElementById('professor').value.trim();
-  const semana = document.getElementById('semana').value;
+function abrir(tela){
 
-  // Limpar a API key de caracteres invisíveis ou não-ASCII
-  apiKey = apiKey.replace(/[^\x20-\x7E]/g, '');
+["dashboard","turmas","repertorio","instrumentos","backup"]
 
-  if (!apiKey) {
-    alert('Por favor, insira sua chave da API Anthropic no campo "Chave da API"');
-    return;
-  }
+.forEach(t=>{
 
-  if (!apiKey.startsWith('sk-ant-')) {
-    alert('A chave da API deve começar com "sk-ant-". Verifique se copiou corretamente.');
-    return;
-  }
+document.getElementById(t)
+.style.display="none"
 
-  if (turmas.length === 0) {
-    alert('Adicione pelo menos uma turma antes de gerar os planos');
-    return;
-  }
+})
 
-  // Mostrar loading
-  document.getElementById('emptyState').style.display = 'none';
-  document.getElementById('planoContent').classList.remove('active');
-  document.getElementById('loading').classList.add('active');
+document.getElementById(tela)
+.style.display="block"
 
-  try {
-    // Gerar plano para cada turma
-    let htmlCompleto = `
-      <div style="margin-bottom: 30px;">
-        <h2 style="color: #667eea; font-size: 24px; margin-bottom: 8px;">Planos de Aula da Semana</h2>
-        <p style="color: #718096; font-size: 14px;">
-          ${escola ? escola + ' · ' : ''}
-          ${professor ? 'Prof. ' + professor + ' · ' : ''}
-          Semana de ${formatarData(semana)}
-        </p>
-      </div>
-    `;
-
-    for (const turma of turmas) {
-      const plano = await gerarPlanoParaTurma(turma, apiKey);
-      htmlCompleto += `
-        <div style="margin-bottom: 40px; padding-bottom: 40px; border-bottom: 2px solid #e2e8f0;">
-          ${plano}
-        </div>
-      `;
-    }
-
-    // Exibir resultado
-    document.getElementById('loading').classList.remove('active');
-    document.getElementById('planoContent').innerHTML = htmlCompleto;
-    document.getElementById('planoContent').classList.add('active');
-
-  } catch (error) {
-    document.getElementById('loading').classList.remove('active');
-    alert('Erro ao gerar planos: ' + error.message);
-    document.getElementById('emptyState').style.display = 'flex';
-  }
 }
 
-// Gerar plano para uma turma específica
-async function gerarPlanoParaTurma(turma, apiKey) {
-  const dataAtual = new Date().toISOString().split('T')[0];
-  const planoAnterior = planosAnteriores[turma.id];
-  
-  const prompt = construirPrompt(turma, planoAnterior);
-  
-  try {
-    // Verificar se está rodando no Electron
-    const isElectron = window.electronAPI !== undefined;
-    
-    if (isElectron) {
-      // Usar Electron API
-      const result = await window.electronAPI.callAPI(apiKey.trim(), prompt);
-      
-      if (!result.success) {
-        throw new Error(result.error);
-      }
+function salvarTurma(){
 
-      const planoGerado = data?.content?.[0]?.text || "Erro ao gerar plano";
-      
-      // Salvar como último plano
-      planosAnteriores[turma.id] = {
-        data: dataAtual,
-        resumo: extrairResumo(planoGerado)
-      };
-      salvarDados();
-      
-      return formatarPlanoHTML(turma, planoGerado);
-      
-    } else {
-      // Usar fetch direto (navegador - requer extensão CORS)
-      const response = await fetch("/api/generate", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json"
-        },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 4000,
-          messages: [
-            { 
-              role: "user", 
-              content: prompt
-            }
-          ],
-        })
-      });
+let t={
 
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.error?.message || `Erro ${response.status}`);
-      }
+nome:nomeTurma.value,
 
-      const planoGerado = data.content[0].text;
-      
-      // Salvar como último plano
-      planosAnteriores[turma.id] = {
-        data: dataAtual,
-        resumo: extrairResumo(planoGerado)
-      };
-      salvarDados();
-      
-      return formatarPlanoHTML(turma, planoGerado);
-    }
-    
-  } catch (error) {
-    console.error('Erro detalhado:', error);
-    
-    // Mensagem específica para erro de CORS
-    if (error.message === 'Failed to fetch' || error.name === 'TypeError') {
-      throw new Error('⚠️ ERRO DE CORS - A API bloqueia chamadas diretas do navegador.\n\nSOLUÇÕES:\n\n1) MAIS RÁPIDA: Instale a extensão "Allow CORS" no Chrome\n   → https://chrome.google.com/webstore (busque "CORS Unblock")\n   → Ative a extensão e recarregue a página\n\n2) MELHOR: Use a versão Desktop com Electron\n   → Baixe o arquivo ZIP que eu criei\n   → Extraia e execute instalar.bat (Windows) ou instalar.sh (Mac/Linux)\n   → Execute iniciar.bat ou iniciar.sh\n\nA versão Desktop funciona 100% sem problemas!');
-    }
-    
-    throw error;
-  }
+faixa:faixa.value,
+
+tema:tema.value,
+
+objetivo:objetivo.value,
+
+dificuldades:dificuldades.value
+
 }
 
-// Construir prompt para o Claude
-function construirPrompt(turma, planoAnterior) {
-  const contextoAnterior = planoAnterior 
-    ? `\n\nÚLTIMA AULA (${planoAnterior.data}):\n${planoAnterior.resumo}`
-    : '\n\nEsta é a primeira aula com esta turma.';
+database.turmas.push(t)
 
-  const observacoes = turma.observacoes 
-    ? `\n\nOBSERVAÇÕES DO PROFESSOR SOBRE A ÚLTIMA AULA:\n${turma.observacoes}\n(IMPORTANTE: Considere estas observações para adaptar o plano de hoje. Se algo não funcionou, mude a abordagem. Se algo deu muito certo, pode aprofundar ou expandir.)`
-    : '';
+salvarLocal()
 
-  const dataAtual = new Date();
-  const mes = dataAtual.toLocaleDateString('pt-BR', { month: 'long' });
-  const proximaData = verificarDataComemorativa(dataAtual);
+render()
 
-  return `Você é um especialista em educação musical para educação básica brasileira.
-
-CONTEXTO DA TURMA:
-- Turma: ${turma.nome}
-- Faixa etária: ${getFaixaLabel(turma.faixa)}
-- Duração da aula: ${turma.duracao} minutos
-- Mês atual: ${mes}
-${proximaData ? `- Próxima data comemorativa: ${proximaData}` : ''}
-${contextoAnterior}${observacoes}
-
-TAREFA:
-Crie um plano de aula completo seguindo EXATAMENTE esta estrutura:
-
-**PLANO DE AULA**
-Turma: ${turma.nome} | Faixa etária: ${getFaixaLabel(turma.faixa)} | Duração: ${turma.duracao}min | Tema da aula: [escolha um tema apropriado]
-
-**HABILIDADES BNCC**
-[Liste 2-3 habilidades BNCC com códigos exatos e descrições completas]
-
-**OBJETIVOS DA AULA**
-[Liste 3-4 objetivos práticos e observáveis]
-
-**DESENVOLVIMENTO**
-Aquecimento (${Math.floor(turma.duracao * 0.15)}min) — [atividade simples]
-Desenvolvimento 1 (${Math.floor(turma.duracao * 0.35)}min) — [atividade prática principal]
-Desenvolvimento 2 (${Math.floor(turma.duracao * 0.25)}min) — [expansão ou criação coletiva]
-Conexão teórica (${Math.floor(turma.duracao * 0.15)}min) — [conceito emergindo da prática]
-Fechamento (${Math.floor(turma.duracao * 0.10)}min) — [retomada e registro]
-
-**REPERTÓRIO E RECURSOS**
-Músicas: [liste as músicas específicas]
-Instrumentos: [liste os instrumentos]
-Tecnologia: [se aplicável]
-Materiais: [outros materiais]
-
-**AVALIAÇÃO FORMATIVA**
-[Como observar o aprendizado durante a aula]
-
-DIRETRIZES:
-- Considere a progressão em relação à aula anterior
-- ${observacoes ? 'PRIORIDADE: Adapte o plano com base nas observações do professor sobre a última aula' : 'Varie o repertório semana a semana'}
-- Priorize prática, criação e expressão corporal
-- A teoria emerge da prática, nunca é o ponto de partida
-- Use músicas brasileiras e do folclore quando apropriado
-${proximaData ? `- Considere a proximidade de ${proximaData} no repertório ou tema` : ''}
-
-Responda APENAS com o plano de aula formatado, sem introduções ou explicações adicionais.`;
 }
 
-// Verificar datas comemorativas próximas (30 dias)
-function verificarDataComemorativa(data) {
-  const mes = data.getMonth() + 1;
-  const dia = data.getDate();
-  
-  const datas = {
-    '04-19': 'Dia do Índio (19/04)',
-    '05-10': 'Dia das Mães (2º domingo de maio)',
-    '06-12': 'Dia dos Namorados (12/06)',
-    '06-24': 'Festa Junina (junho)',
-    '08-11': 'Dia do Estudante (11/08)',
-    '08-22': 'Folclore (22/08)',
-    '09-07': 'Independência (07/09)',
-    '10-12': 'Dia das Crianças (12/10)',
-    '11-20': 'Consciência Negra (20/11)',
-    '12-25': 'Natal (25/12)'
-  };
-  
-  // Verificar próximos 30 dias
-  for (let i = 0; i <= 30; i++) {
-    const dataFutura = new Date(data);
-    dataFutura.setDate(dataFutura.getDate() + i);
-    const chave = `${String(dataFutura.getMonth() + 1).padStart(2, '0')}-${String(dataFutura.getDate()).padStart(2, '0')}`;
-    if (datas[chave]) {
-      return datas[chave];
-    }
-  }
-  
-  return null;
+function salvarMusica(){
+
+database.musicas.push({
+
+nome:musica.value,
+
+artista:artista.value,
+
+spotify:spotify.value
+
+})
+
+salvarLocal()
+
+render()
+
 }
 
-// Extrair resumo do plano (para contexto da próxima aula)
-function extrairResumo(plano) {
-  const linhas = plano.split('\n');
-  let tema = '';
-  let objetivos = '';
-  
-  linhas.forEach(linha => {
-    if (linha.includes('Tema da aula:')) {
-      tema = linha.split('Tema da aula:')[1].trim();
-    }
-    if (linha.startsWith('**OBJETIVOS')) {
-      const idx = linhas.indexOf(linha);
-      objetivos = linhas.slice(idx + 1, idx + 4).filter(l => l.trim().startsWith('-')).join(' ');
-    }
-  });
-  
-  return `Tema: ${tema}\nObjetivos trabalhados: ${objetivos}`;
+function salvarInstrumento(){
+
+database.instrumentos.push({
+
+nome:instrumento.value
+
+})
+
+salvarLocal()
+
+render()
+
 }
 
-// Formatar plano em HTML
-function formatarPlanoHTML(turma, plano) {
-  let html = `<h3 style="color: #667eea; margin-top: 0;">📝 ${turma.nome}</h3>`;
-  
-  // Processar texto markdown simples
-  html += plano
-    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-    .replace(/^- (.+)$/gm, '<li>$1</li>')
-    .replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>')
-    .replace(/\n\n/g, '</p><p>')
-    .replace(/^(.+)$/gm, '<p>$1</p>');
-  
-  return html;
+function render(){
+
+listaTurmas.innerHTML=""
+
+database.turmas.forEach(t=>{
+
+listaTurmas.innerHTML+=`
+
+<div class="turma">
+
+<b>${t.nome}</b>
+
+<p>${t.tema}</p>
+
+</div>
+
+`
+
+})
+
+listaMusicas.innerHTML=""
+
+database.musicas.forEach(m=>{
+
+listaMusicas.innerHTML+=`
+
+<div class="turma">
+
+${m.nome}
+
+</div>
+
+`
+
+})
+
+listaInstrumentos.innerHTML=""
+
+database.instrumentos.forEach(i=>{
+
+listaInstrumentos.innerHTML+=`
+
+<div class="turma">
+
+${i.nome}
+
+</div>
+
+`
+
+})
+
+resumo.innerText=
+database.turmas.length+
+" turmas cadastradas"
+
 }
 
-// Formatar data
-function formatarData(dataISO) {
-  const data = new Date(dataISO + 'T00:00:00');
-  return data.toLocaleDateString('pt-BR', { 
-    day: '2-digit', 
-    month: 'long', 
-    year: 'numeric' 
-  });
+function exportar(){
+
+let data=
+JSON.stringify(database)
+
+let blob=
+new Blob([data])
+
+let a=
+document.createElement("a")
+
+a.href=
+URL.createObjectURL(blob)
+
+a.download="backup.json"
+
+a.click()
+
 }
 
-// Abrir modal de observações
-function abrirModalObservacoes(turmaId) {
-  const turma = turmas.find(t => t.id === turmaId);
-  if (!turma) return;
-  
-  turmaAtualObservacoes = turmaId;
-  document.getElementById('modalTurmaNome').textContent = turma.nome;
-  document.getElementById('observacoesTexto').value = turma.observacoes || '';
-  document.getElementById('modalObservacoes').classList.add('active');
+function importar(e){
+
+let file=
+e.target.files[0]
+
+let reader=
+new FileReader()
+
+reader.onload=function(){
+
+database=
+JSON.parse(reader.result)
+
+salvarLocal()
+
+render()
+
 }
 
-// Fechar modal de observações
-function fecharModalObservacoes() {
-  document.getElementById('modalObservacoes').classList.remove('active');
-  document.getElementById('observacoesTexto').value = '';
-  turmaAtualObservacoes = null;
+reader.readAsText(file)
+
 }
 
-// Salvar observações
-function salvarObservacoes() {
-  if (!turmaAtualObservacoes) return;
-  
-  const turma = turmas.find(t => t.id === turmaAtualObservacoes);
-  if (!turma) return;
-  
-  const texto = document.getElementById('observacoesTexto').value.trim();
-  turma.observacoes = texto || null;
-  
-  salvarDados();
-  renderizarTurmas();
-  fecharModalObservacoes();
-}
-
-// Fechar modal ao clicar fora
-document.addEventListener('click', function(e) {
-  const modal = document.getElementById('modalObservacoes');
-  if (e.target === modal) {
-    fecharModalObservacoes();
-  }
-});
-
-// Carregar dados ao iniciar
-carregarDados();
-
-// Event listeners
-document.getElementById('btnAdicionarTurma').addEventListener('click', adicionarTurma);
-document.getElementById('btnGerar').addEventListener('click', gerarPlanosSemana);
 </script>
 
 </body>
