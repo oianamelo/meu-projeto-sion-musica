@@ -1,3 +1,0 @@
-@echo off
-echo Iniciando Gerador de Planos de Aula...
-npm start
