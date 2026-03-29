@@ -952,6 +952,26 @@ instrumentos:[],
 
 planos:[],
 
+let db={
+
+turmas:[],
+
+musicas:[],
+
+instrumentos:[],
+
+planos:[],
+
+registros:[],
+
+config:{
+
+apiKey:""
+
+}
+
+}  
+
 config:{
 
 apiKey:""
@@ -1386,32 +1406,40 @@ let aluno=
 turmaAtual.alunos
 .find(a=>a.id===id);
 
-let obs=
-prompt("Observação");
+let tipo=
+prompt(
+"Tipo:\n1 comportamento\n2 musical\n3 dificuldade\n4 destaque"
+);
 
-if(!obs)return;
+let texto=
+prompt("Descreva o ocorrido");
 
-let r={
+if(!texto)return;
 
-data:new Date(),
+let registro={
 
-texto:obs,
+id:Date.now(),
+
+data:new Date()
+.toLocaleDateString(),
+
+tipo:tipo,
+
+texto:texto,
 
 aluno:aluno.nome,
 
-turma:turmaAtual.nome
+turma:turmaAtual.nome,
+
+impacto:"",
+
+proximoPasso:""
 
 };
 
-aluno.registros.push(r);
+aluno.registros.push(registro);
 
-if(!db.registros){
-
-db.registros=[];
-
-}
-
-db.registros.push(r);
+db.registros.push(registro);
 
 save();
 
