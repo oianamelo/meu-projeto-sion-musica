@@ -1,211 +1,19 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Diário Musical</title>
-
-<style>
-
-/* (CSS mantido exatamente como você fez) */
-
-:root{
---amarelo:#FFD54A;
---amarelo2:#FFB300;
---preto:#121212;
---cinza1:#1e1e1e;
---cinza2:#252525;
---cinza3:#2f2f2f;
---branco:#ffffff;
---verde:#48bb78;
---vermelho:#fc8181;
---azul:#667eea;
-}
-
-*{margin:0;padding:0;box-sizing:border-box;}
-
-body{
-font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto;
-background:var(--preto);
-color:white;
-}
-
-/* resto do CSS igual */
-
-</style>
-
-</head>
-
-<body>
-
-<!-- LOGIN -->
-
-<div class="login" id="login">
-
-<div class="loginCard">
-
-<h1>🎵 Diário Musical</h1>
-
-<p>Sistema pedagógico musical</p>
-
-<input type="password" id="senha" placeholder="Senha"/>
-
-<button onclick="login()">Entrar</button>
-
-</div>
-
-</div>
-
-<!-- APP -->
-
-<div class="app" id="app">
-
-<div class="sidebar">
-
-<div class="logo">🎵 Diário Musical</div>
-
-<div class="menuItem active" onclick="ir('dashboard')" id="menu-dashboard">
-Dashboard
-</div>
-
-<div class="menuItem" onclick="ir('turmas')" id="menu-turmas">
-Turmas
-</div>
-
-<div class="menuItem" onclick="ir('planos')" id="menu-planos">
-Planos IA
-</div>
-
-<div class="menuItem" onclick="ir('repertorio')" id="menu-repertorio">
-Repertório
-</div>
-
-<div class="menuItem" onclick="ir('instrumentos')" id="menu-instrumentos">
-Instrumentos
-</div>
-
-<div class="menuItem" onclick="ir('config')" id="menu-config">
-Config
-</div>
-
-</div>
-
-<div class="rightPanel">
-
-<h3>Registros</h3>
-
-<div id="painelRegistros">Sem registros</div>
-
-</div>
-
-<div class="main">
-
-<!-- DASHBOARD -->
-
-<div id="dashboard">
-
-<div class="top">
-
-<h2>Dashboard</h2>
-
-<button onclick="abrirNovaTurma()">Nova turma</button>
-
-</div>
-
-<div class="grid">
-
-<div class="stat">
-Turmas
-<div class="statNumber" id="statTurmas">0</div>
-</div>
-
-<div class="stat">
-Planos
-<div class="statNumber" id="statPlanos">0</div>
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>Minhas turmas</h3>
-
-<div id="dashTurmas"></div>
-
-</div>
-
-</div>
-
-<!-- TURMAS -->
-
-<div id="turmas" style="display:none">
-
-<div class="top">
-
-<h2>Turmas</h2>
-
-<button onclick="abrirNovaTurma()">Nova turma</button>
-
-</div>
-
-<div id="listaTurmas"></div>
-
-</div>
-
-<!-- PLANOS -->
-
-<div id="planos" style="display:none">
-
-<div class="top">
-<h2>Planos IA</h2>
-</div>
-
-<div class="card">
-
-Turma:
-
-<select id="selectTurmaPlano">
-<option value="">Escolher</option>
-</select>
-
-<br><br>
-
-<button onclick="gerarPlanoIA()">
-Gerar plano novo
-</button>
-
-<button onclick="gerarContinuacaoPlano()" class="btn2">
-Gerar continuação
-</button>
-
-<button onclick="gerarAvaliacaoIA()" class="btn2">
-Sugerir avaliação trimestral
-</button>
-
-</div>
-
-<div id="areaPlano"></div>
-
-</div>
-
-</div>
-
-</div>
-
 <script>
 
 const SENHA="#acm262#diariomusical";
 
 let db={
+
 turmas:[],
 musicas:[],
 instrumentos:[],
 planos:[],
 registros:[],
-config:{apiKey:""}
+
+config:{
+apiKey:""
+}
+
 }
 
 /* LOGIN */
@@ -235,7 +43,10 @@ alert("Senha errada");
 
 function save(){
 
-localStorage.setItem("diario3",JSON.stringify(db));
+localStorage.setItem(
+"diario3",
+JSON.stringify(db)
+);
 
 }
 
@@ -243,11 +54,15 @@ function load(){
 
 let d=localStorage.getItem("diario3");
 
-if(d) db=JSON.parse(d);
+if(d){
+
+db=JSON.parse(d);
 
 }
 
-/* RENDER SELECT */
+}
+
+/* SELECT TURMAS */
 
 function renderSelectTurmas(){
 
@@ -273,12 +88,9 @@ ${t.nome}
 
 function renderAll(){
 
-renderTurmas();
-
 renderDashboard();
-
+renderTurmas();
 renderSelectTurmas();
-
 renderRegistros();
 
 }
@@ -287,7 +99,7 @@ renderRegistros();
 
 async function gerarPlanoIA(){
 
-let id=selectTurmaPlano.value;
+let id=document.getElementById("selectTurmaPlano").value;
 
 let turma=db.turmas.find(t=>t.id==id);
 
@@ -307,7 +119,7 @@ enviarParaClaude(prompt,turma);
 
 async function gerarContinuacaoPlano(){
 
-let id=selectTurmaPlano.value;
+let id=document.getElementById("selectTurmaPlano").value;
 
 let turma=db.turmas.find(t=>t.id==id);
 
@@ -319,10 +131,21 @@ return;
 
 }
 
-let ultimo=turma.planos.length?
-turma.planos[turma.planos.length-1].conteudo:"";
+let ultimoPlano=
 
-let prompt="Continue a sequência:\n"+ultimo;
+turma.planos.length ?
+turma.planos[turma.planos.length-1].conteudo :
+"";
+
+let prompt=`
+
+Continue a sequência pedagógica:
+
+${ultimoPlano}
+
+Crie a próxima aula.
+
+`;
 
 enviarParaClaude(prompt,turma);
 
@@ -330,7 +153,7 @@ enviarParaClaude(prompt,turma);
 
 async function gerarAvaliacaoIA(){
 
-let id=selectTurmaPlano.value;
+let id=document.getElementById("selectTurmaPlano").value;
 
 let turma=db.turmas.find(t=>t.id==id);
 
@@ -343,11 +166,20 @@ return;
 }
 
 let registros=db.registros
+
 .filter(r=>r.turma===turma.nome)
-.map(r=>r.texto)
+
+.map(r=>r.aluno+" "+r.texto)
+
 .join("\n");
 
-let prompt="Crie avaliação:\n"+registros;
+let prompt=`
+
+Crie avaliação pedagógica baseada:
+
+${registros}
+
+`;
 
 enviarParaClaude(prompt);
 
@@ -355,7 +187,8 @@ enviarParaClaude(prompt);
 
 async function enviarParaClaude(prompt,turma){
 
-areaPlano.innerHTML="Gerando...";
+document.getElementById("areaPlano")
+.innerHTML="Gerando...";
 
 try{
 
@@ -367,13 +200,15 @@ headers:{
 "Content-Type":"application/json"
 },
 
-body:JSON.stringify({prompt})
+body:JSON.stringify({
+prompt
+})
 
 });
 
 let data=await r.json();
 
-let texto=data?.text||"Erro IA";
+let texto=data?.text || "Erro IA";
 
 if(turma){
 
@@ -395,21 +230,10 @@ save();
 
 }
 
-areaPlano.innerHTML=`
+document.getElementById("areaPlano")
+.innerHTML=formatPlano(texto);
 
-<div class="card">
-
-<pre>
-
-${texto}
-
-</pre>
-
-</div>
-
-`;
-
-}catch{
+}catch(e){
 
 alert("Erro IA");
 
@@ -421,21 +245,144 @@ alert("Erro IA");
 
 function montarPrompt(t){
 
+let instrumentos=db.instrumentos
+.map(i=>i.nome)
+.join(", ");
+
+let musicas=db.musicas
+.map(m=>m.nome)
+.join(", ");
+
+let planosAnteriores=t.planos
+.map(p=>p.conteudo)
+.slice(-3)
+.join("\n");
+
+let registrosTurma=db.registros
+.filter(r=>r.turma===t.nome)
+.slice(-10)
+.map(r=>r.aluno+": "+r.texto)
+.join("\n");
+
 return `
 
-Crie plano de aula musical.
+Você é especialista em educação musical infantil.
 
-Turma: ${t.nome}
+Turma:
+${t.nome}
 
-Tema: ${t.tema}
+Faixa:
+${t.faixa}
 
-Objetivo: ${t.objetivo}
+Tema anual:
+${t.tema}
+
+Objetivo:
+${t.objetivo}
+
+Planos anteriores:
+${planosAnteriores}
+
+Registros:
+${registrosTurma}
+
+Instrumentos:
+${instrumentos}
+
+Repertório:
+${musicas}
+
+Crie plano estruturado.
 
 `;
 
 }
 
-</script>
+/* FORMATAR */
 
-</body>
-</html>
+function formatPlano(t){
+
+return `
+
+<div class="card">
+
+<h3>Plano gerado</h3>
+
+<pre>
+
+${t}
+
+</pre>
+
+</div>
+
+`;
+
+}
+
+/* REGISTROS */
+
+function renderRegistros(){
+
+let el=document.getElementById("painelRegistros");
+
+if(!db.registros || db.registros.length===0){
+
+el.innerHTML="Sem registros";
+
+return;
+
+}
+
+el.innerHTML=db.registros
+
+.slice(-30)
+
+.reverse()
+
+.map(r=>`
+
+<div class="registroItem">
+
+<b>${r.aluno}</b>
+
+<br>
+
+${r.texto}
+
+<br>
+
+<small>
+
+${r.turma}
+
+</small>
+
+<br>
+
+<small>
+
+${r.data}
+
+</small>
+
+</div>
+
+`)
+
+.join("");
+
+}
+
+function salvarApi(){
+
+db.config.apiKey=
+document.getElementById("apiKey").value;
+
+save();
+
+alert("API salva");
+
+}
+
+</script>
