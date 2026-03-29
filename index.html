@@ -757,18 +757,15 @@ Turma:
 
 <select id="selectTurmaPlano">
 
-function renderSelectTurmas(){
+<option value="">
+  
+Escolher
+  
+</option>
 
-let el =
-document.getElementById("selectTurmaPlano");
+</select>  
 
-el.innerHTML =
-'<option value="">Escolher</option>';
-
-db.turmas.forEach(t=>{
-
-el.innerHTML +=
-`<option value="${t.id}">
+<option value="${t.id}">
 ${t.nome}
 </option>`;
 
@@ -1247,11 +1244,32 @@ ${t.nome}
 
 function renderAll(){
 
+function renderSelectTurmas(){
+
+let el =
+document.getElementById("selectTurmaPlano");
+
+if(!el)return;
+
+el.innerHTML =
+'<option value="">Escolher</option>';
+
+db.turmas.forEach(t=>{
+
+el.innerHTML +=
+`<option value="${t.id}">
+${t.nome}
+</option>`;
+
+});
+
+}
+  
 renderDashboard();
 
 renderTurmas();
 
-// renderSelectTurmas();
+renderSelectTurmas();
   
 renderRegistros();
 
@@ -1649,12 +1667,6 @@ document
 .getElementById("areaPlano")
 .innerHTML=
 formatPlano(texto);
-
-}catch(e){
-
-alert("Erro IA");
-
-}
   
 let prompt=
 montarPrompt(turma);
