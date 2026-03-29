@@ -1688,8 +1688,7 @@ function renderRegistros(){
 let el=
 document.getElementById("painelRegistros");
 
-if(!db.registros||
-db.registros.length===0){
+if(db.registros.length===0){
 
 el.innerHTML="Sem registros";
 
@@ -1700,7 +1699,7 @@ return;
 el.innerHTML=
 
 db.registros
-.slice(-20)
+.slice(-30)
 .reverse()
 .map(r=>
 
@@ -1721,13 +1720,21 @@ ${r.turma}
 
 </small>
 
+<br>
+
+<small>
+
+${r.data}
+
+</small>
+
 </div>
 
 `
 
 ).join("");
 
-}  
+}
   
 </script>
 
