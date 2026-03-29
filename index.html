@@ -757,6 +757,23 @@ Turma:
 
 <select id="selectTurmaPlano">
 
+function renderSelectTurmas(){
+
+let el =
+document.getElementById("selectTurmaPlano");
+
+el.innerHTML =
+'<option value="">Escolher</option>';
+
+db.turmas.forEach(t=>{
+
+el.innerHTML +=
+`<option value="${t.id}">
+${t.nome}
+</option>`;
+
+});  
+
 <option>
 
 Escolher
@@ -1125,7 +1142,7 @@ renderTurmas();
 
 renderDashboard();
   
-// renderSelectTurmas();
+renderSelectTurmas();
 
 }
 
