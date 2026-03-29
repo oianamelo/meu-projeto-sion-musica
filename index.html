@@ -1,202 +1,577 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Diário Musical</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
 
 :root{
+
 --amarelo:#FFD54A;
+--amarelo2:#FFB300;
+
 --preto:#121212;
---cinza:#2a2a2a;
---cinza2:#1e1e1e;
+
+--cinza1:#1e1e1e;
+--cinza2:#252525;
+--cinza3:#2f2f2f;
+
 --branco:#ffffff;
---card:#202020;
+
+--verde:#48bb78;
+--vermelho:#fc8181;
+--azul:#667eea;
+
+}
+
+*{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+
 }
 
 body{
-margin:0;
-font-family:system-ui;
+
+font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto;
+
 background:var(--preto);
+
 color:white;
+
 }
 
+/* LOGIN */
+
 .login{
+
 height:100vh;
+
 display:flex;
-align-items:center;
+
 justify-content:center;
-background:linear-gradient(135deg,#FFD54A,#FFB300);
+
+align-items:center;
+
+background:linear-gradient(135deg,var(--amarelo),var(--amarelo2));
+
 }
 
 .loginCard{
+
 background:white;
-padding:40px;
-border-radius:12px;
-width:320px;
-text-align:center;
+
 color:black;
+
+padding:40px;
+
+border-radius:18px;
+
+width:360px;
+
+text-align:center;
+
+box-shadow:0 30px 80px rgba(0,0,0,0.3);
+
+}
+
+.loginCard h1{
+
+margin-bottom:8px;
+
+}
+
+.loginCard p{
+
+color:#666;
+
+margin-bottom:20px;
+
 }
 
 .loginCard input{
+
 width:100%;
-padding:12px;
-margin-top:15px;
-border-radius:8px;
-border:1px solid #ccc;
+
+padding:14px;
+
+border-radius:10px;
+
+border:2px solid #e0e0e0;
+
+margin-top:10px;
+
+font-size:15px;
+
+}
+
+.loginCard input:focus{
+
+outline:none;
+
+border-color:var(--amarelo);
+
 }
 
 .loginCard button{
+
 width:100%;
-margin-top:15px;
-padding:12px;
+
+margin-top:20px;
+
+padding:14px;
+
 border:none;
-background:#FFD54A;
-border-radius:8px;
-font-weight:bold;
+
+background:var(--amarelo);
+
+border-radius:10px;
+
+font-weight:600;
+
 cursor:pointer;
+
 }
+
+/* APP */
 
 .app{
+
 display:none;
+
 height:100vh;
+
 }
 
+/* SIDEBAR */
+
 .sidebar{
-width:260px;
-background:var(--cinza2);
-padding:20px;
+
+width:270px;
+
+background:var(--cinza1);
+
+height:100vh;
+
 position:fixed;
-height:100%;
+
+left:0;
+
+top:0;
+
+padding:20px;
+
+overflow:auto;
+
+border-right:1px solid #333;
+
 }
 
 .logo{
+
 font-size:22px;
+
 font-weight:bold;
+
 color:var(--amarelo);
+
 margin-bottom:30px;
+
 }
 
 .menuItem{
+
 padding:12px;
+
 border-radius:8px;
+
 cursor:pointer;
+
 margin-bottom:6px;
+
+transition:.2s;
+
 }
 
 .menuItem:hover{
-background:var(--cinza);
+
+background:var(--cinza2);
+
 }
+
+.menuItem.active{
+
+background:var(--amarelo);
+
+color:black;
+
+font-weight:600;
+
+}
+
+/* MAIN */
 
 .main{
-margin-left:260px;
+
+margin-left:270px;
+
 padding:30px;
+
+min-height:100vh;
+
+width:calc(100% - 270px);
+
 }
+
+/* TOP */
+
+.top{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:20px;
+
+}
+
+.top h2{
+
+color:var(--amarelo);
+
+}
+
+/* CARD */
 
 .card{
-background:var(--card);
-padding:20px;
-border-radius:12px;
+
+background:var(--cinza1);
+
+padding:22px;
+
+border-radius:14px;
+
 margin-bottom:20px;
+
+border:1px solid #333;
+
 }
+
+.card h3{
+
+color:var(--amarelo);
+
+margin-bottom:15px;
+
+}
+
+/* GRID */
+
+.grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+gap:20px;
+
+}
+
+/* STATS */
+
+.stat{
+
+background:linear-gradient(135deg,var(--cinza2),var(--cinza1));
+
+padding:20px;
+
+border-radius:12px;
+
+text-align:center;
+
+}
+
+.statNumber{
+
+font-size:34px;
+
+color:var(--amarelo);
+
+font-weight:bold;
+
+margin-top:10px;
+
+}
+
+/* BUTTON */
 
 button{
+
 background:var(--amarelo);
+
 border:none;
-padding:10px 16px;
+
+padding:12px 18px;
+
 border-radius:8px;
-font-weight:bold;
+
+font-weight:600;
+
 cursor:pointer;
+
 }
 
-input,select,textarea{
-background:#2a2a2a;
-border:1px solid #444;
-color:white;
-padding:10px;
-border-radius:8px;
-width:100%;
-margin-top:6px;
+button:hover{
+
+background:var(--amarelo2);
+
 }
+
+/* SECONDARY */
+
+.btn2{
+
+background:var(--cinza2);
+
+color:white;
+
+border:1px solid #444;
+
+}
+
+/* TURMA */
 
 .turma{
-background:#2a2a2a;
-padding:15px;
+
+background:var(--cinza2);
+
+padding:16px;
+
 border-radius:10px;
+
 margin-top:10px;
+
 cursor:pointer;
+
 }
 
 .turma:hover{
+
 background:#333;
+
 }
 
-.top{
-display:flex;
-justify-content:space-between;
+.turmaNome{
+
+color:var(--amarelo);
+
+font-weight:bold;
+
+}
+
+/* FORM */
+
+.form{
+
+margin-top:10px;
+
+}
+
+.form label{
+
+font-size:13px;
+
+color:#aaa;
+
+display:block;
+
+margin-top:12px;
+
+}
+
+.form input,
+.form textarea,
+.form select{
+
+width:100%;
+
+padding:10px;
+
+margin-top:5px;
+
+border-radius:8px;
+
+border:1px solid #444;
+
+background:var(--cinza2);
+
+color:white;
+
+}
+
+/* MODAL */
+
+.modal{
+
+display:none;
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+right:0;
+
+bottom:0;
+
+background:rgba(0,0,0,0.8);
+
+justify-content:center;
+
 align-items:center;
-margin-bottom:20px;
+
+}
+
+.modalBox{
+
+background:var(--cinza1);
+
+padding:30px;
+
+border-radius:16px;
+
+width:500px;
+
+max-height:90vh;
+
+overflow:auto;
+
+}
+
+/* EMPTY */
+
+.empty{
+
+color:#777;
+
+text-align:center;
+
+padding:40px;
+
 }
 
 </style>
+
 </head>
 
 <body>
+
+<!-- LOGIN -->
 
 <div class="login" id="login">
 
 <div class="loginCard">
 
-<h2>Diário Musical</h2>
+<h1>🎵 Diário Musical</h1>
 
-<p>acesso do professor</p>
+<p>Sistema pedagógico musical</p>
 
-<input type="password" id="senha">
+<input
+type="password"
+id="senha"
+placeholder="Senha"
+/>
 
 <button onclick="login()">
+
 Entrar
+
 </button>
 
 </div>
 
 </div>
 
+<!-- APP -->
+
 <div class="app" id="app">
 
 <div class="sidebar">
 
 <div class="logo">
+
 🎵 Diário Musical
+
 </div>
 
-<div class="menuItem" onclick="abrir('dashboard')">
+<div
+class="menuItem active"
+onclick="ir('dashboard')"
+id="menu-dashboard">
+
 Dashboard
+
 </div>
 
-<div class="menuItem" onclick="abrir('turmas')">
+<div
+class="menuItem"
+onclick="ir('turmas')"
+id="menu-turmas">
+
 Turmas
+
 </div>
 
-<div class="menuItem" onclick="abrir('repertorio')">
+<div
+class="menuItem"
+onclick="ir('planos')"
+id="menu-planos">
+
+Planos IA
+
+</div>
+
+<div
+class="menuItem"
+onclick="ir('repertorio')"
+id="menu-repertorio">
+
 Repertório
+
 </div>
 
-<div class="menuItem" onclick="abrir('instrumentos')">
+<div
+class="menuItem"
+onclick="ir('instrumentos')"
+id="menu-instrumentos">
+
 Instrumentos
+
 </div>
 
-<div class="menuItem" onclick="abrir('backup')">
-Backup
+<div
+class="menuItem"
+onclick="ir('config')"
+id="menu-config">
+
+Config
+
 </div>
 
 </div>
 
 <div class="main">
+
+<!-- DASHBOARD -->
 
 <div id="dashboard">
 
@@ -204,62 +579,98 @@ Backup
 
 <h2>Dashboard</h2>
 
-<button onclick="novaTurma()">
+<button onclick="abrirNovaTurma()">
+
 Nova turma
+
 </button>
 
 </div>
 
+<div class="grid">
+
+<div class="stat">
+
+Turmas
+
+<div
+class="statNumber"
+id="statTurmas">
+
+0
+
+</div>
+
+</div>
+
+<div class="stat">
+
+Planos
+
+<div
+class="statNumber"
+id="statPlanos">
+
+0
+
+</div>
+
+</div>
+
+<div class="stat">
+
+Repertório
+
+<div
+class="statNumber"
+id="statMusicas">
+
+0
+
+</div>
+
+</div>
+
+<div class="stat">
+
+Instrumentos
+
+<div
+class="statNumber"
+id="statInstrumentos">
+
+0
+
+</div>
+
+</div>
+
+</div>
+
 <div class="card">
 
-<h3>Resumo pedagógico</h3>
+<h3>Minhas turmas</h3>
 
-<p id="resumo">
-Nenhuma turma ainda
-</p>
+<div id="dashTurmas"></div>
 
 </div>
 
 </div>
 
-<div id="turmas" style="display:none">
+<!-- TURMAS -->
+
+<div
+id="turmas"
+style="display:none">
+
+<div class="top">
 
 <h2>Turmas</h2>
 
-<div class="card">
+<button onclick="abrirNovaTurma()">
 
-<h3>Nova turma</h3>
+Nova turma
 
-<label>Nome</label>
-<input id="nomeTurma">
-
-<label>Faixa</label>
-
-<select id="faixa">
-
-<option>INF2</option>
-<option>INF3</option>
-<option>INF4</option>
-<option>INF5</option>
-<option>1ANO</option>
-<option>2ANO</option>
-<option>3ANO</option>
-<option>4ANO</option>
-<option>5ANO</option>
-
-</select>
-
-<label>Tema anual</label>
-<input id="tema">
-
-<label>Objetivo trimestre</label>
-<input id="objetivo">
-
-<label>Dificuldades</label>
-<textarea id="dificuldades"></textarea>
-
-<button onclick="salvarTurma()">
-Salvar turma
 </button>
 
 </div>
@@ -268,20 +679,61 @@ Salvar turma
 
 </div>
 
-<div id="repertorio" style="display:none">
+<!-- PLANOS -->
 
-<h2>Repertório</h2>
+<div
+id="planos"
+style="display:none">
+
+<div class="top">
+
+<h2>Planos IA</h2>
+
+</div>
 
 <div class="card">
 
-<input id="musica" placeholder="nome">
+Turma:
 
-<input id="artista" placeholder="artista">
+<select id="selectTurmaPlano">
 
-<input id="spotify" placeholder="spotify">
+<option>
 
-<button onclick="salvarMusica()">
-Salvar
+Escolher
+
+</option>
+
+</select>
+
+<br><br>
+
+<button
+onclick="gerarPlanoIA()">
+
+Gerar plano
+
+</button>
+
+</div>
+
+<div id="areaPlano"></div>
+
+</div>
+
+<!-- REPERTORIO -->
+
+<div
+id="repertorio"
+style="display:none">
+
+<div class="top">
+
+<h2>Repertório</h2>
+
+<button onclick="abrirNovaMusica()">
+
+Nova música
+
 </button>
 
 </div>
@@ -290,16 +742,20 @@ Salvar
 
 </div>
 
-<div id="instrumentos" style="display:none">
+<!-- INSTRUMENTOS -->
+
+<div
+id="instrumentos"
+style="display:none">
+
+<div class="top">
 
 <h2>Instrumentos</h2>
 
-<div class="card">
+<button onclick="abrirNovoInstrumento()">
 
-<input id="instrumento">
+Novo instrumento
 
-<button onclick="salvarInstrumento()">
-Adicionar
 </button>
 
 </div>
@@ -308,21 +764,109 @@ Adicionar
 
 </div>
 
-<div id="backup" style="display:none">
+<!-- CONFIG -->
 
-<h2>Backup</h2>
+<div
+id="config"
+style="display:none">
+
+<div class="top">
+
+<h2>Configurações</h2>
+
+</div>
 
 <div class="card">
 
-<button onclick="exportar()">
-Exportar JSON
+API Claude:
+
+<input
+type="password"
+id="apiKey"
+placeholder="sk-ant..."
+/>
+
+<br><br>
+
+<button onclick="salvarApi()">
+
+Salvar
+
 </button>
 
-<input type="file" onchange="importar(event)">
+</div>
+
+</div>
 
 </div>
 
 </div>
+
+<!-- MODAL TURMA -->
+
+<div
+class="modal"
+id="modalTurma">
+
+<div class="modalBox">
+
+<h3>Nova turma</h3>
+
+<div class="form">
+
+<label>Nome</label>
+
+<input id="turmaNome">
+
+<label>Faixa</label>
+
+<select id="turmaFaixa">
+
+<option>INF2</option>
+<option>INF3</option>
+<option>INF4</option>
+<option>INF5</option>
+<option>1ANO</option>
+<option>2ANO</option>
+
+</select>
+
+<label>Duração</label>
+
+<input
+type="number"
+value="50"
+id="turmaDuracao">
+
+<label>Tema anual</label>
+
+<input id="turmaTema">
+
+<label>Objetivo trimestre</label>
+
+<textarea id="turmaObjetivo"></textarea>
+
+<label>Dificuldades</label>
+
+<textarea id="turmaDificuldade"></textarea>
+
+</div>
+
+<br>
+
+<button onclick="salvarTurma()">
+
+Salvar
+
+</button>
+
+<button
+class="btn2"
+onclick="fecharModal('modalTurma')">
+
+Cancelar
+
+</button>
 
 </div>
 
@@ -330,82 +874,135 @@ Exportar JSON
 
 <script>
 
-const senhaSistema="#acm262#diariomusical"
+/* CONFIG */
+
+const SENHA="#acm262#diariomusical";
+
+/* DATABASE */
+
+let db={
+
+turmas:[],
+
+musicas:[],
+
+instrumentos:[],
+
+planos:[],
+
+config:{
+
+apiKey:""
+
+}
+
+}
+
+/* AUTH */
 
 function login(){
 
-if(
-document.getElementById("senha").value
-===senhaSistema
-){
+let s=
 
-document.getElementById("login").style.display="none"
+document
+.getElementById("senha")
+.value;
 
-document.getElementById("app").style.display="block"
+if(s===SENHA){
 
-carregar()
+loginOk();
 
-}
-else{
+}else{
 
-alert("senha incorreta")
+alert("Senha errada");
 
 }
 
 }
 
-const supabaseClient =
-supabase.createClient(
-"https://yyunoxlgbnxgjixzahce.supabase.co",
-"sb_publishable_n7SpGZZSRG_hyomw3rnuNw_bknbpFnq"
-)
+function loginOk(){
 
-let database={
+document
+.getElementById("login")
+.style.display="none";
 
-turmas:[],
-musicas:[],
-instrumentos:[]
+document
+.getElementById("app")
+.style.display="block";
 
-}
+load();
 
-function salvarLocal(){
-
-localStorage.setItem(
-"diario",
-JSON.stringify(database)
-)
+renderAll();
 
 }
 
-function carregar(){
+/* NAV */
 
-let dados=
-localStorage.getItem("diario")
+function ir(t){
 
-if(dados){
+["dashboard",
+"turmas",
+"planos",
+"repertorio",
+"instrumentos",
+"config"]
 
-database=
-JSON.parse(dados)
+.forEach(x=>{
+
+document
+.getElementById(x)
+.style.display="none";
+
+document
+.getElementById("menu-"+x)
+.classList.remove("active");
+
+});
+
+document
+.getElementById(t)
+.style.display="block";
+
+document
+.getElementById("menu-"+t)
+.classList.add("active");
 
 }
 
-render()
+/* STORAGE */
+
+function save(){
+
+localStorage
+.setItem(
+"diario3",
+JSON.stringify(db)
+);
 
 }
 
-function abrir(tela){
+function load(){
 
-["dashboard","turmas","repertorio","instrumentos","backup"]
+let d=
 
-.forEach(t=>{
+localStorage
+.getItem("diario3");
 
-document.getElementById(t)
-.style.display="none"
+if(d){
 
-})
+db=JSON.parse(d);
 
-document.getElementById(tela)
-.style.display="block"
+}
+
+}
+
+/* TURMAS */
+
+function abrirNovaTurma(){
+
+document
+.getElementById("modalTurma")
+.style.display="flex";
 
 }
 
@@ -413,156 +1010,168 @@ function salvarTurma(){
 
 let t={
 
-nome:nomeTurma.value,
+id:Date.now(),
 
-faixa:faixa.value,
+nome:
+document.getElementById("turmaNome").value,
 
-tema:tema.value,
+faixa:
+document.getElementById("turmaFaixa").value,
 
-objetivo:objetivo.value,
+duracao:
+parseInt(
+document.getElementById("turmaDuracao").value
+),
 
-dificuldades:dificuldades.value
+tema:
+document.getElementById("turmaTema").value,
 
-}
+objetivo:
+document.getElementById("turmaObjetivo").value,
 
-database.turmas.push(t)
+dificuldade:
+document.getElementById("turmaDificuldade").value,
 
-salvarLocal()
+alunos:[],
 
-render()
+planos:[],
 
-}
+observacoes:[],
 
-function salvarMusica(){
+avaliacoes:[],
 
-database.musicas.push({
+instrumentosUsados:[],
 
-nome:musica.value,
+repertorioUsado:[]
 
-artista:artista.value,
+};
 
-spotify:spotify.value
+db.turmas.push(t);
 
-})
+save();
 
-salvarLocal()
+fecharModal("modalTurma");
 
-render()
+renderTurmas();
 
-}
-
-function salvarInstrumento(){
-
-database.instrumentos.push({
-
-nome:instrumento.value
-
-})
-
-salvarLocal()
-
-render()
+renderDashboard();
 
 }
 
-function render(){
+function renderTurmas(){
 
-listaTurmas.innerHTML=""
+let el=
+document
+.getElementById("listaTurmas");
 
-database.turmas.forEach(t=>{
+if(db.turmas.length===0){
 
-listaTurmas.innerHTML+=`
+el.innerHTML=
 
+'<div class=empty>Sem turmas</div>';
+
+return;
+
+}
+
+el.innerHTML=
+
+db.turmas.map(t=>
+
+`
 <div class="turma">
 
-<b>${t.nome}</b>
+<div class="turmaNome">
 
-<p>${t.tema}</p>
+${t.nome}
+
+</div>
+
+${t.tema}
+
+<br>
+
+<button
+onclick="abrirTurma(${t.id})">
+
+Abrir
+
+</button>
 
 </div>
 
 `
 
-})
+).join("");
 
-listaMusicas.innerHTML=""
+}
 
-database.musicas.forEach(m=>{
+/* DASH */
 
-listaMusicas.innerHTML+=`
+function renderDashboard(){
 
+document
+.getElementById("statTurmas")
+.innerText=
+
+db.turmas.length;
+
+document
+.getElementById("statPlanos")
+.innerText=
+
+db.planos.length;
+
+document
+.getElementById("statMusicas")
+.innerText=
+
+db.musicas.length;
+
+document
+.getElementById("statInstrumentos")
+.innerText=
+
+db.instrumentos.length;
+
+let el=
+document
+.getElementById("dashTurmas");
+
+el.innerHTML=
+
+db.turmas.map(t=>
+
+`
 <div class="turma">
 
-${m.nome}
+${t.nome}
 
 </div>
 
 `
 
-})
-
-listaInstrumentos.innerHTML=""
-
-database.instrumentos.forEach(i=>{
-
-listaInstrumentos.innerHTML+=`
-
-<div class="turma">
-
-${i.nome}
-
-</div>
-
-`
-
-})
-
-resumo.innerText=
-database.turmas.length+
-" turmas cadastradas"
+).join("");
 
 }
 
-function exportar(){
+/* GLOBAL */
 
-let data=
-JSON.stringify(database)
+function renderAll(){
 
-let blob=
-new Blob([data])
+renderDashboard();
 
-let a=
-document.createElement("a")
-
-a.href=
-URL.createObjectURL(blob)
-
-a.download="backup.json"
-
-a.click()
+renderTurmas();
 
 }
 
-function importar(e){
+/* MODAL */
 
-let file=
-e.target.files[0]
+function fecharModal(id){
 
-let reader=
-new FileReader()
-
-reader.onload=function(){
-
-database=
-JSON.parse(reader.result)
-
-salvarLocal()
-
-render()
-
-}
-
-reader.readAsText(file)
+document
+.getElementById(id)
+.style.display="none";
 
 }
 
