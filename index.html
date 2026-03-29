@@ -467,6 +467,52 @@ text-align:center;
 
 padding:40px;
 
+  }
+
+/* PAINEL DIREITO */
+
+.rightPanel{
+
+width:260px;
+
+background:var(--cinza1);
+
+height:100vh;
+
+position:fixed;
+
+right:0;
+
+top:0;
+
+padding:20px;
+
+border-left:1px solid #333;
+
+overflow:auto;
+
+}
+
+.rightPanel h3{
+
+color:var(--amarelo);
+
+margin-bottom:15px;
+
+}
+
+.registroItem{
+
+background:var(--cinza2);
+
+padding:10px;
+
+border-radius:8px;
+
+margin-bottom:10px;
+
+font-size:13px;
+
 }
 
 </style>
@@ -569,6 +615,18 @@ Config
 
 </div>
 
+<div class="rightPanel">
+
+<h3>Registros</h3>
+
+<div id="painelRegistros">
+
+Sem registros
+
+</div>
+
+</div>
+  
 <div class="main">
 
 <!-- DASHBOARD -->
@@ -842,13 +900,15 @@ id="turmaDuracao">
 
 <input id="turmaTema">
 
+<label>Plano anual PDF</label>
+
+<input type="file" id="turmaPDF">
+  
 <label>Objetivo trimestre</label>
 
 <textarea id="turmaObjetivo"></textarea>
 
-<label>Dificuldades</label>
-
-<textarea id="turmaDificuldade"></textarea>
+<label>Observações iniciais da turma</label>
 
 </div>
 
@@ -1055,6 +1115,8 @@ fecharModal("modalTurma");
 renderTurmas();
 
 renderDashboard();
+  
+renderSelectTurmas();
 
 }
 
@@ -1162,6 +1224,12 @@ function renderAll(){
 renderDashboard();
 
 renderTurmas();
+
+renderSelectTurmas();
+
+renderRegistros();
+
+}
 
 }
 
@@ -1314,6 +1382,43 @@ Registrar
 }
 
 function registrarAluno(id){
+
+let aluno=
+turmaAtual.alunos
+.find(a=>a.id===id);
+
+let obs=
+prompt("Observação");
+
+if(!obs)return;
+
+let r={
+
+data:new Date(),
+
+texto:obs,
+
+aluno:aluno.nome,
+
+turma:turmaAtual.nome
+
+};
+
+aluno.registros.push(r);
+
+if(!db.registros){
+
+db.registros=[];
+
+}
+
+db.registros.push(r);
+
+save();
+
+renderRegistros();
+
+}
 
 let aluno=
 
@@ -1573,6 +1678,53 @@ ${t}
 `;
 
 }
+
+function renderRegistros(){
+
+let el=
+document.getElementById("painelRegistros");
+
+if(!db.registros||
+db.registros.length===0){
+
+el.innerHTML="Sem registros";
+
+return;
+
+}
+
+el.innerHTML=
+
+db.registros
+.slice(-20)
+.reverse()
+.map(r=>
+
+`
+<div class="registroItem">
+
+<b>${r.aluno}</b>
+
+<br>
+
+${r.texto}
+
+<br>
+
+<small>
+
+${r.turma}
+
+</small>
+
+</div>
+
+`
+
+).join("");
+
+}  
+  
 </script>
 
 </body>
