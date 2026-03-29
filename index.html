@@ -1528,7 +1528,7 @@ let data=
 await r.json();
 
 let texto=
-data.text;
+data?.text || "Erro IA";
 
 let plano={
 
@@ -1626,7 +1626,20 @@ PLANOS ANTERIORES:
 
 ${planosAnteriores}
 
-Crie plano completo.
+Crie plano de aula completo contendo:
+
+Objetivo pedagógico
+Aquecimento musical
+Atividade principal
+Uso de instrumentos
+Repertório
+Criação musical
+Encerramento reflexivo
+Avaliação observacional
+
+Considerar progressão pedagógica.
+Não repetir planos anteriores.
+Adaptar dificuldades da turma.
 
 Equilibre:
 
