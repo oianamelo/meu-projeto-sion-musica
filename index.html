@@ -1262,27 +1262,6 @@ ${t.nome}
 /* GLOBAL */
 
 function renderAll(){
-
-function renderSelectTurmas(){
-
-let el =
-document.getElementById("selectTurmaPlano");
-
-if(!el)return;
-
-el.innerHTML =
-'<option value="">Escolher</option>';
-
-db.turmas.forEach(t=>{
-
-el.innerHTML +=
-`<option value="${t.id}">
-${t.nome}
-</option>`;
-
-});
-
-}
   
 renderDashboard();
 
