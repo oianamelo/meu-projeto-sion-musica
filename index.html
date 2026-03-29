@@ -1568,38 +1568,48 @@ PROMPT INTELIGENTE
 function montarPrompt(t){
 
 let instrumentos=
-
 db.instrumentos
 .map(i=>i.nome)
-.join(",");
+.join(", ");
 
 let musicas=
-
 db.musicas
 .map(m=>m.nome)
-.join(",");
+.join(", ");
 
 let planosAnteriores=
 
 t.planos
 .map(p=>p.conteudo)
-.slice(-2)
+.slice(-3)
+.join("\n");
+
+let registrosTurma=
+
+db.registros
+.filter(r=>r.turma===t.nome)
+.slice(-10)
+.map(r=>
+
+r.aluno + ": " + r.texto
+
+)
 .join("\n");
 
 return `
 
-Você é especialista em educação musical.
+Você é especialista em educação musical infantil.
 
-Siga:
+BASE PEDAGÓGICA:
 
 BNCC
 ABEM
 ISME
-DGE
+DGE Portugal
 
-CONTEXTO:
+CONTEXTO DA TURMA:
 
-Turma:
+Nome:
 ${t.nome}
 
 Faixa:
@@ -1608,48 +1618,54 @@ ${t.faixa}
 Tema anual:
 ${t.tema}
 
-Objetivo:
+Objetivo trimestral:
 ${t.objetivo}
 
-Dificuldades:
+Dificuldades observadas:
 ${t.dificuldade}
+
+HISTÓRICO RECENTE:
+
+${planosAnteriores}
+
+REGISTROS PEDAGÓGICOS:
+
+${registrosTurma}
 
 INSTRUMENTOS DISPONÍVEIS:
 
 ${instrumentos}
 
-REPERTÓRIO:
+REPERTÓRIO DISPONÍVEL:
 
 ${musicas}
 
-PLANOS ANTERIORES:
+REGRAS:
 
-${planosAnteriores}
+Não repetir atividades recentes.
 
-Crie plano de aula completo contendo:
+Garantir progressão pedagógica.
 
-Objetivo pedagógico
-Aquecimento musical
+Equilibrar:
+
+escuta
+criação
+movimento
+ritmo
+canto
+exploração sonora
+
+Considerar dificuldades reais.
+
+Criar plano estruturado com:
+
+Objetivo
+Aquecimento
 Atividade principal
 Uso de instrumentos
-Repertório
 Criação musical
-Encerramento reflexivo
+Encerramento
 Avaliação observacional
-
-Considerar progressão pedagógica.
-Não repetir planos anteriores.
-Adaptar dificuldades da turma.
-
-Equilibre:
-
-criação
-execução
-escuta
-movimento
-teoria emergente
-
-Não repetir atividades.
 
 `;
 
