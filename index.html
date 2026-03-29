@@ -563,7 +563,7 @@ Entrar
 
 <div
 class="menuItem active"
-onclick="ir('dashboard')"
+="ir('dashboard')"
 id="menu-dashboard">
 
 Dashboard
@@ -572,7 +572,7 @@ Dashboard
 
 <div
 class="menuItem"
-onclick="ir('turmas')"
+="ir('turmas')"
 id="menu-turmas">
 
 Turmas
@@ -581,7 +581,7 @@ Turmas
 
 <div
 class="menuItem"
-onclick="ir('planos')"
+="ir('planos')"
 id="menu-planos">
 
 Planos IA
@@ -590,7 +590,7 @@ Planos IA
 
 <div
 class="menuItem"
-onclick="ir('repertorio')"
+="ir('repertorio')"
 id="menu-repertorio">
 
 Repertório
@@ -599,7 +599,7 @@ Repertório
 
 <div
 class="menuItem"
-onclick="ir('instrumentos')"
+="ir('instrumentos')"
 id="menu-instrumentos">
 
 Instrumentos
@@ -1669,7 +1669,7 @@ function renderRegistros(){
 let el=
 document.getElementById("painelRegistros");
 
-if(db.registros.length===0){
+if(!db.registros || db.registros.length===0){
 
 el.innerHTML="Sem registros";
 
