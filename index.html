@@ -19,7 +19,7 @@
 
 --cinza1:#1e1e1e;
 --cinza2:#252525;
---cinza3:#2f2f2f;
+--cinza3:#2f2f2f;/
 
 --branco:#ffffff;
 
@@ -1231,8 +1231,6 @@ renderRegistros();
 
 }
 
-}
-
 /* MODAL */
 
 function fecharModal(id){
@@ -1417,29 +1415,6 @@ db.registros.push(r);
 save();
 
 renderRegistros();
-
-}
-
-let aluno=
-
-turmaAtual.alunos
-.find(a=>a.id===id);
-
-let obs=
-
-prompt("Observação");
-
-if(!obs)return;
-
-aluno.registros.push({
-
-data:new Date(),
-
-texto:obs
-
-});
-
-save();
 
 }
 
