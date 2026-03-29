@@ -563,7 +563,7 @@ Entrar
 
 <div
 class="menuItem active"
-="ir('dashboard')"
+onclick="ir('dashboard')"
 id="menu-dashboard">
 
 Dashboard
@@ -572,7 +572,7 @@ Dashboard
 
 <div
 class="menuItem"
-="ir('turmas')"
+onclick="ir('turmas')"
 id="menu-turmas">
 
 Turmas
@@ -581,7 +581,7 @@ Turmas
 
 <div
 class="menuItem"
-="ir('planos')"
+onclick="ir('planos')"
 id="menu-planos">
 
 Planos IA
@@ -590,7 +590,7 @@ Planos IA
 
 <div
 class="menuItem"
-="ir('repertorio')"
+onclick="ir('repertorio')"
 id="menu-repertorio">
 
 Repertório
@@ -599,7 +599,7 @@ Repertório
 
 <div
 class="menuItem"
-="ir('instrumentos')"
+onclick="ir('instrumentos')"
 id="menu-instrumentos">
 
 Instrumentos
@@ -850,6 +850,17 @@ placeholder="sk-ant..."
 
 <button onclick="salvarApi()">
 
+function salvarApi(){
+
+db.config.apiKey =
+document.getElementById("apiKey").value;
+
+save();
+
+alert("API salva");
+
+}
+  
 Salvar
 
 </button>
@@ -911,6 +922,8 @@ id="turmaDuracao">
 <textarea id="turmaObjetivo"></textarea>
 
 <label>Observações iniciais da turma</label>
+
+<textarea id="turmaObs"></textarea>  
 
 </div>
 
