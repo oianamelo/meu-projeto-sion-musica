@@ -849,17 +849,6 @@ placeholder="sk-ant..."
 <br><br>
 
 <button onclick="salvarApi()">
-
-function salvarApi(){
-
-db.config.apiKey =
-document.getElementById("apiKey").value;
-
-save();
-
-alert("API salva");
-
-}
   
 Salvar
 
@@ -1729,6 +1718,17 @@ ${r.data}
 ).join("");
 
 }
+
+function salvarApi(){
+
+db.config.apiKey =
+document.getElementById("apiKey").value;
+
+save();
+
+alert("API salva");
+
+}  
   
 </script>
 
